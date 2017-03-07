@@ -267,7 +267,7 @@ public abstract class ClassicActivity extends AppCompatActivity {
         }
     }
     protected enum AppBarStyle{
-        None,ToolBar,ClassicTitleBar
+        None,ToolBar,ToolBarInFrameLayout,ClassicTitleBar,ClassicTitleBarInFrameLayout
     }
 
     protected void setAppBarTitle(int resId){
@@ -302,15 +302,19 @@ public abstract class ClassicActivity extends AppCompatActivity {
      */
     private void initContentView(int layoutResID) {
         if (AppBarStyle.ToolBar.equals(configAppBarStyle())) {
-            initToolBarContentView(layoutResID);
+            initToolBarContentView(layoutResID,R.layout.root_layout_linearlayout);
+        }else if (AppBarStyle.ToolBarInFrameLayout.equals(configAppBarStyle())) {
+            initToolBarContentView(layoutResID,R.layout.root_layout_framelayout);
         }else if (AppBarStyle.ClassicTitleBar.equals(configAppBarStyle())) {
-            initClassicTitleBarContentView(layoutResID);
+            initClassicTitleBarContentView(layoutResID,R.layout.root_layout_linearlayout);
+        }else if (AppBarStyle.ClassicTitleBarInFrameLayout.equals(configAppBarStyle())) {
+            initClassicTitleBarContentView(layoutResID,R.layout.root_layout_framelayout);
         } else {
             setContentView(layoutResID);
         }
 
     }
-    protected void initClassicTitleBarContentView(int layoutResID) {
+    protected void initClassicTitleBarContentView(int layoutResID,int rootLayoutResID) {
         setContentView(R.layout.root_layout_linearlayout);
         //懒加载
         ViewStubCompat id_vs_title = findById(R.id.id_vs_title);
@@ -335,8 +339,8 @@ public abstract class ClassicActivity extends AppCompatActivity {
         id_vs_content.setLayoutResource(layoutResID);
         id_vs_content.inflate();
     }
-    protected void initToolBarContentView(int layoutResID) {
-        setContentView(R.layout.root_layout_linearlayout);
+    protected void initToolBarContentView(int layoutResID,int rootLayoutResID) {
+        setContentView(rootLayoutResID);
         //懒加载
         ViewStubCompat id_vs_title = findById(R.id.id_vs_title);
         id_vs_title.setLayoutResource(R.layout.layout_classic_toolbar);
