@@ -1,6 +1,5 @@
 package com.louisgeek.classichu;
 
-import android.view.Menu;
 import android.view.View;
 
 import com.classichu.classichu.basic.tool.ToastTool;
@@ -22,13 +21,13 @@ public class MainActivity extends ClassicActivity {
                  .setOnTitleBarRightItemClickListener(new ClassicTitleBar.OnTitleBarRightItemClickListener() {
                     @Override
                     public void onRightClick(View view) {
-                        ToastTool.showImageOk("1111");
+                        ToastTool.showImageOk("222222");
                     }
                 });
         mClassicTitleBar.setOnTitleBarLeftItemClickListener(new ClassicTitleBar.OnTitleBarLeftItemClickListener() {
             @Override
             public void onLeftClick(View view) {
-                ToastTool.showImageOk("22222");
+                ToastTool.showImageOk("111111");
             }
         });
     }
@@ -45,7 +44,7 @@ public class MainActivity extends ClassicActivity {
 
     @Override
     protected AppBarStyle configAppBarStyle() {
-        return AppBarStyle.ClassicTitleBarInFrameLayout;
+        return AppBarStyle.ClassicTitleBar_InMerge;
     }
 
     @Override
@@ -53,9 +52,9 @@ public class MainActivity extends ClassicActivity {
 
     }
 
-    @Override
+  /*  @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_simple, menu);
         return super.onCreateOptionsMenu(menu);
-    }
+    }*/
 }

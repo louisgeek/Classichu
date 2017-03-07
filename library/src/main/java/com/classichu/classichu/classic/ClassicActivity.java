@@ -267,7 +267,7 @@ public abstract class ClassicActivity extends AppCompatActivity {
         }
     }
     protected enum AppBarStyle{
-        None,ToolBar,ToolBarInFrameLayout,ClassicTitleBar,ClassicTitleBarInFrameLayout
+        None,ToolBar,ToolBar_InMerge,ClassicTitleBar,ClassicTitleBar_InMerge
     }
 
     protected void setAppBarTitle(int resId){
@@ -275,11 +275,11 @@ public abstract class ClassicActivity extends AppCompatActivity {
     }
 
     protected void setAppBarTitle(CharSequence title){
-        if(configAppBarStyle()== AppBarStyle.ToolBar){
+        if(configAppBarStyle()== AppBarStyle.ToolBar||configAppBarStyle()== AppBarStyle.ToolBar_InMerge){
             if (mToolbar!=null){
                 mToolbar.setTitle(title);
             }
-        }else if (configAppBarStyle()== AppBarStyle.ClassicTitleBar){
+        }else if (configAppBarStyle()== AppBarStyle.ClassicTitleBar||configAppBarStyle()== AppBarStyle.ClassicTitleBar_InMerge){
             mClassicTitleBar.setCenterText(title);
         }
     }
@@ -303,12 +303,12 @@ public abstract class ClassicActivity extends AppCompatActivity {
     private void initContentView(int layoutResID) {
         if (AppBarStyle.ToolBar.equals(configAppBarStyle())) {
             initToolBarContentView(layoutResID,R.layout.root_layout_linearlayout);
-        }else if (AppBarStyle.ToolBarInFrameLayout.equals(configAppBarStyle())) {
-            initToolBarContentView(layoutResID,R.layout.root_layout_framelayout);
+        }else if (AppBarStyle.ToolBar_InMerge.equals(configAppBarStyle())) {
+            initToolBarContentView(layoutResID,R.layout.root_layout_merge);
         }else if (AppBarStyle.ClassicTitleBar.equals(configAppBarStyle())) {
             initClassicTitleBarContentView(layoutResID,R.layout.root_layout_linearlayout);
-        }else if (AppBarStyle.ClassicTitleBarInFrameLayout.equals(configAppBarStyle())) {
-            initClassicTitleBarContentView(layoutResID,R.layout.root_layout_framelayout);
+        }else if (AppBarStyle.ClassicTitleBar_InMerge.equals(configAppBarStyle())) {
+            initClassicTitleBarContentView(layoutResID,R.layout.root_layout_merge);
         } else {
             setContentView(layoutResID);
         }
