@@ -94,7 +94,7 @@ public class ToastTool {
             mImageToast.setDuration(Toast.LENGTH_SHORT);
             mImageToast.setGravity(Gravity.CENTER, 0, 0);
             //
-            View view = LayoutInflater.from(context).inflate(R.layout.layout_toast_custom, null);
+            View view = LayoutInflater.from(context).inflate(R.layout.layout_toast_image, null);
             TextView tv = (TextView) view.findViewById(R.id.id_tv_toast);
             tv.setText(TextUtils.isEmpty(message) ? "" : message);
             ImageView iv = (ImageView) view.findViewById(R.id.id_iv_toast);
