@@ -40,6 +40,7 @@ public abstract class ClassicActivity extends AppCompatActivity {
          */
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
+
     protected String mTag;
     protected Context mContext;
     protected Activity mActivity;
@@ -148,6 +149,7 @@ public abstract class ClassicActivity extends AppCompatActivity {
     protected AppBarStyle configAppBarStyle() {
         return AppBarStyle.None;
     }
+
     /**
      *
      */
@@ -258,6 +260,7 @@ public abstract class ClassicActivity extends AppCompatActivity {
 
     /**
      * 防止重复点击的监听
+     *
      * @param view
      * @param onNotFastClickListener
      */
@@ -266,20 +269,30 @@ public abstract class ClassicActivity extends AppCompatActivity {
             view.setOnClickListener(onNotFastClickListener);
         }
     }
-    protected enum AppBarStyle{
-        None,ToolBar,ToolBar_InMerge,ClassicTitleBar,ClassicTitleBar_InMerge
+
+    protected enum AppBarStyle {
+        None, ToolBar, ToolBar_InFrame, ToolBar_InMerge, ToolBar_InFrame_Overall,
+        ClassicTitleBar, ClassicTitleBar_InFrame, ClassicTitleBar_InMerge, ClassicTitleBar_InFrame_Overall
     }
 
-    protected void setAppBarTitle(int resId){
+    protected void setAppBarTitle(int resId) {
         setAppBarTitle(getString(resId));
     }
 
-    protected void setAppBarTitle(CharSequence title){
-        if(configAppBarStyle()== AppBarStyle.ToolBar||configAppBarStyle()== AppBarStyle.ToolBar_InMerge){
-            if (mToolbar!=null){
+    protected void setAppBarTitle(CharSequence title) {
+        if (configAppBarStyle() == AppBarStyle.ToolBar ||
+                configAppBarStyle() == AppBarStyle.ToolBar_InMerge ||
+                configAppBarStyle() == AppBarStyle.ToolBar_InFrame ||
+                configAppBarStyle() == AppBarStyle.ToolBar_InFrame_Overall
+                ) {
+            if (mToolbar != null) {
                 mToolbar.setTitle(title);
             }
-        }else if (configAppBarStyle()== AppBarStyle.ClassicTitleBar||configAppBarStyle()== AppBarStyle.ClassicTitleBar_InMerge){
+        } else if (configAppBarStyle() == AppBarStyle.ClassicTitleBar ||
+                configAppBarStyle() == AppBarStyle.ClassicTitleBar_InMerge ||
+                configAppBarStyle() == AppBarStyle.ClassicTitleBar_InFrame ||
+                configAppBarStyle() == AppBarStyle.ClassicTitleBar_InFrame_Overall
+                ) {
             mClassicTitleBar.setCenterText(title);
         }
     }
@@ -302,19 +315,50 @@ public abstract class ClassicActivity extends AppCompatActivity {
      */
     private void initContentView(int layoutResID) {
         if (AppBarStyle.ToolBar.equals(configAppBarStyle())) {
-            initToolBarContentView(layoutResID,R.layout.root_layout_linearlayout);
-        }else if (AppBarStyle.ToolBar_InMerge.equals(configAppBarStyle())) {
-            initToolBarContentView(layoutResID,R.layout.root_layout_merge);
-        }else if (AppBarStyle.ClassicTitleBar.equals(configAppBarStyle())) {
-            initClassicTitleBarContentView(layoutResID,R.layout.root_layout_linearlayout);
-        }else if (AppBarStyle.ClassicTitleBar_InMerge.equals(configAppBarStyle())) {
-            initClassicTitleBarContentView(layoutResID,R.layout.root_layout_merge);
+            initToolBarContentView(layoutResID, R.layout.root_layout_linearlayout);
+        } else if (AppBarStyle.ToolBar_InFrame.equals(configAppBarStyle())) {
+            initToolBarContentView(layoutResID, R.layout.root_layout_framelayout);
+        } else if (AppBarStyle.ToolBar_InMerge.equals(configAppBarStyle())) {
+            initToolBarContentView(layoutResID, R.layout.root_layout_merge);
+        } else if (AppBarStyle.ToolBar_InFrame_Overall.equals(configAppBarStyle())) {
+            initToolBarContentViewOverall(layoutResID, R.layout.root_layout_framelayout_overall);
+        } else if (AppBarStyle.ClassicTitleBar.equals(configAppBarStyle())) {
+            initClassicTitleBarContentView(layoutResID, R.layout.root_layout_linearlayout);
+        } else if (AppBarStyle.ClassicTitleBar_InFrame.equals(configAppBarStyle())) {
+            initClassicTitleBarContentView(layoutResID, R.layout.root_layout_framelayout);
+        } else if (AppBarStyle.ClassicTitleBar_InMerge.equals(configAppBarStyle())) {
+            initClassicTitleBarContentView(layoutResID, R.layout.root_layout_merge);
+        } else if (AppBarStyle.ClassicTitleBar_InFrame_Overall.equals(configAppBarStyle())) {
+            initClassicTitleBarContentViewOverall(layoutResID, R.layout.root_layout_framelayout_overall);
         } else {
             setContentView(layoutResID);
         }
 
     }
-    protected void initClassicTitleBarContentView(int layoutResID,int rootLayoutResID) {
+
+    protected void initClassicTitleBarContentViewOverall(int layoutResID, int rootLayoutResID) {
+        setContentView(rootLayoutResID);
+        //
+        ViewStubCompat id_vs_content = findById(R.id.id_vs_content);
+        id_vs_content.setLayoutResource(layoutResID);
+        id_vs_content.inflate();
+        //
+        mClassicTitleBar = findById(R.id.id_classic_titlebar);
+        if (mClassicTitleBar != null) {
+            if (configBackBtnEnable()) {
+                mClassicTitleBar.setLeftImageClassicBack()
+                        .setOnTitleBarLeftItemClickListener(new ClassicTitleBar.OnTitleBarLeftItemClickListener() {
+                            @Override
+                            public void onLeftClick(View view) {
+                                //结束当前aty
+                                finish();
+                            }
+                        });
+            }
+        }
+    }
+
+    protected void initClassicTitleBarContentView(int layoutResID, int rootLayoutResID) {
         setContentView(rootLayoutResID);
         //懒加载
         ViewStubCompat id_vs_title = findById(R.id.id_vs_title);
@@ -326,12 +370,12 @@ public abstract class ClassicActivity extends AppCompatActivity {
             if (configBackBtnEnable()) {
                 mClassicTitleBar.setLeftImageClassicBack()
                         .setOnTitleBarLeftItemClickListener(new ClassicTitleBar.OnTitleBarLeftItemClickListener() {
-                    @Override
-                    public void onLeftClick(View view) {
-                        //结束当前aty
-                        finish();
-                    }
-                });
+                            @Override
+                            public void onLeftClick(View view) {
+                                //结束当前aty
+                                finish();
+                            }
+                        });
             }
         }
 
@@ -339,7 +383,34 @@ public abstract class ClassicActivity extends AppCompatActivity {
         id_vs_content.setLayoutResource(layoutResID);
         id_vs_content.inflate();
     }
-    protected void initToolBarContentView(int layoutResID,int rootLayoutResID) {
+
+    protected void initToolBarContentViewOverall(int layoutResID, int rootLayoutResID) {
+        setContentView(rootLayoutResID);
+        //
+        ViewStubCompat id_vs_content = findById(R.id.id_vs_content);
+        id_vs_content.setLayoutResource(layoutResID);
+        id_vs_content.inflate();
+
+        //
+        mToolbar = findById(R.id.id_toolbar);
+        if (mToolbar != null) {
+            setSupportActionBar(mToolbar);
+            if (configBackBtnEnable()) {
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                //必须设置在setSupportActionBar(mToolbar);后才有效
+                mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //结束当前aty
+                        finish();
+                    }
+                });
+            }
+        }
+
+    }
+
+    protected void initToolBarContentView(int layoutResID, int rootLayoutResID) {
         setContentView(rootLayoutResID);
         //懒加载
         ViewStubCompat id_vs_title = findById(R.id.id_vs_title);
