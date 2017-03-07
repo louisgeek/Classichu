@@ -315,7 +315,7 @@ public abstract class ClassicActivity extends AppCompatActivity {
 
     }
     protected void initClassicTitleBarContentView(int layoutResID,int rootLayoutResID) {
-        setContentView(R.layout.root_layout_linearlayout);
+        setContentView(rootLayoutResID);
         //懒加载
         ViewStubCompat id_vs_title = findById(R.id.id_vs_title);
         id_vs_title.setLayoutResource(R.layout.layout_classic_titlebar);
