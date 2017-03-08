@@ -68,12 +68,12 @@ public abstract class ClassicActivity extends AppCompatActivity {
         /**
          * StatusBar
          */
-        if (configSwipeBackEnable()) {
-            StatusBarHelper.setColorForSwipeBack(this, configStatusBarColorEnable(), configStatusBarColorResId());
-        } else {
-            StatusBarHelper.setColor(this, configStatusBarColorEnable(), configStatusBarColorResId());
-        }
         if (configStatusBarColorEnable()) {
+            if (configSwipeBackEnable()) {
+                StatusBarHelper.setColorForSwipeBack(this, configStatusBarColorEnable(), configStatusBarColorResId());
+            } else {
+                 StatusBarHelper.setColor(this, configStatusBarColorEnable(), configStatusBarColorResId());
+            }
             //修正StatusBarHelper造成的背景色改变
             getContentViewRootLayout().setBackgroundColor(ContextCompat.getColor(this, R.color.windowBackground));
         }

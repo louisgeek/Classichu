@@ -16,7 +16,7 @@ public class MainActivity extends ClassicActivity {
     @Override
     protected void initView() {
 
-        mClassicTitleBar.setCenterText("首页").setLeftText("1111").setRightText("2222")
+      mClassicTitleBar.setCenterText("首页").setLeftText("1111").setRightText("2222")
                 //TODO ImageOrVectorResHelper
                  .setOnTitleBarRightItemClickListener(new ClassicTitleBar.OnTitleBarRightItemClickListener() {
                     @Override
@@ -44,7 +44,7 @@ public class MainActivity extends ClassicActivity {
 
     @Override
     protected AppBarStyle configAppBarStyle() {
-        return AppBarStyle.ClassicTitleBar_InMerge;
+        return AppBarStyle.ClassicTitleBar;
     }
 
     @Override
