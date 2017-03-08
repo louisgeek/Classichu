@@ -6,7 +6,7 @@ import android.support.design.widget.TextInputLayout;
 /**
  * Created by louisgeek on 2016/12/15.
  */
-
+@Deprecated //com.android.support:design:25.2.0 已修复
 public class PasswordToggleViewTool {
     public static void fixPasswordToggleViewInCenter(TextInputLayout id_til_password, int translationY) {
         try {

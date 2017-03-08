@@ -35,7 +35,11 @@ public class CLog {
             Log.w(mTAG, msg);
         }
     }
-
+    public static void e(String msg) {
+        if (mEnable) {
+            Log.e(mTAG, msg);
+        }
+    }
     /**
      * "hamburger".substring(4, 8) returns "urge"
      * "smiles".substring(1, 5) returns "mile"
