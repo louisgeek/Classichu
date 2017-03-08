@@ -51,7 +51,7 @@ public class GlideHelper {
                 .error(R.drawable.ic_image_no).diskCacheStrategy(DiskCacheStrategy.SOURCE).crossFade().into(imageView);
     }
 
-    public static void displayImageNoPlaceholder(ImageView imageView, String url) {
+    public static void displayImageHasNoPlaceholder(ImageView imageView, String url) {
         if (!NetWorkTool.isNetWorkConnected()){
             return;
         }
