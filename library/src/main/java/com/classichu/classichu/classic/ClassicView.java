@@ -9,10 +9,6 @@ public interface ClassicView<D> {
 
     void hideProgress();
 
-    void showNoDataTip();
-
-    void hideNoDataTip();
-
     void showMessage(String msg);
 
     void setupData(D data);

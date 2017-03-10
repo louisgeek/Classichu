@@ -52,6 +52,7 @@
     <color name="classicBannerBottomBg">#66000000</color>
     <color name="classicItemClickColor">#42000000</color>
     <color name="classicNavItemClickColor">#21000000</color>
+    <color name="classicTextItemClickColor">#21000000</color>
     <!-- -->
     <color name="classicButtonTextColor">@color/classicWhite</color>
     <color name="classicButtonBg">@color/colorPrimary</color>
