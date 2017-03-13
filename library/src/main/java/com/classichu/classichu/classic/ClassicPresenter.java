@@ -1,5 +1,7 @@
 package com.classichu.classichu.classic;
 
+import com.classichu.classichu.basic.BasicContract;
+
 /**
  * Created by louisgeek on 2016/12/4.
  */

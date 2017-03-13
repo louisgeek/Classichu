@@ -1,4 +1,4 @@
-package com.classichu.classichu.classic;
+package com.classichu.classichu.basic;
 
 /**
  * Created by louisgeek on 2017/2/4.
