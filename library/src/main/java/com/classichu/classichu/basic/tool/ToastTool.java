@@ -12,8 +12,8 @@ import android.widget.Toast;
 
 import com.classichu.classichu.R;
 import com.classichu.classichu.app.ClassicApplication;
-import com.classichu.classichu.basic.helper.ContextHelper;
-import com.classichu.classichu.basic.helper.ImageOrVectorResHelper;
+import com.classichu.classichu.basic.helper.ClassicContextHelper;
+import com.classichu.classichu.basic.helper.VectorOrImageResHelper;
 
 
 /**
@@ -88,7 +88,7 @@ public class ToastTool {
      * @return
      */
     private static Toast initImageToast(final String message, final Drawable drawable) {
-        Context context = ContextHelper.getAppContext();
+        Context context = ClassicContextHelper.getAppContext();
         if (mImageToast == null) {
             mImageToast = new Toast(context);
             mImageToast.setDuration(Toast.LENGTH_SHORT);
@@ -129,7 +129,7 @@ public class ToastTool {
      * @return
      */
     public static void showImage(final String message, int imageResId) {
-        Drawable drawable = ImageOrVectorResHelper.getDrawable(ClassicApplication.getAppContext(), imageResId);
+        Drawable drawable = VectorOrImageResHelper.getDrawable(ClassicApplication.getAppContext(), imageResId);
         initImageToast(message, drawable).show();
     }
 

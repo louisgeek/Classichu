@@ -22,7 +22,6 @@ import java.util.List;
  *
  * 引导用户到系统设置页面，或者应用信息（有些厂家会直接在应用信息提供权限管理入口）
  */
-
 public class GoToSysConfigHelper {
 
     public static  void  goToNormalEnterWithManufacturer(Context context){

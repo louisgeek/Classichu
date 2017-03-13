@@ -5,14 +5,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.classichu.adapter.recyclerview.ClassicRVHeaderFooterAdapter;
+import com.classichu.classichu.R;
 import com.classichu.classichu.app.CLog;
 import com.classichu.classichu.basic.data.FinalData;
 import com.classichu.classichu.basic.event.BasicEvent;
 import com.classichu.classichu.basic.listener.OnNotFastClickListener;
+import com.classichu.classichu.basic.listener.OnRecyclerViewTouchListener;
+import com.classichu.classichu.basic.tool.ViewTool;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -36,6 +44,9 @@ public abstract class ClassicFragment extends Fragment {
     protected Context mContext;
     protected View mRootLayout;
 
+    protected RecyclerView mRecyclerView;
+    protected ClassicRVHeaderFooterAdapter mClassicRVHeaderFooterAdapter;
+    protected SwipeRefreshLayout mSwipeRefreshLayout;
     /**
      * ===================================protected lifecycle=============================
      */
@@ -54,12 +65,18 @@ public abstract class ClassicFragment extends Fragment {
         mRootLayout = inflater.inflate(setupLayoutResId(), container, false);
         //
         EventBus.getDefault().register(this);
-
+        //
+        initRecyclerViewAndAdapter();
+        //
+        initSwipeRefreshLayout();
+        //
         /**
          * last
          */
         initView(mRootLayout);
         initListener();
+
+
         return mRootLayout;
         //return super.onCreateView(inflater, container, savedInstanceState);
     }
@@ -81,6 +98,50 @@ public abstract class ClassicFragment extends Fragment {
     /**
      * =======================================protected===================================
      */
+    protected void toRefreshData() {
+
+        mClassicRVHeaderFooterAdapter.showFooterViewNormal();
+        CLog.d("qqq toRefreshData");
+    }
+    protected void toLoadMoreData() {
+        //
+        mClassicRVHeaderFooterAdapter.showFooterViewDataLoading();
+        CLog.d("qqq toLoadMoreData");
+    }
+    protected int configRecyclerViewResId() {
+        return 0;
+    }
+    protected int configSwipeRefreshLayoutResId() {
+        return 0;
+    }
+
+    protected ClassicRVHeaderFooterAdapter configClassicRVHeaderFooterAdapter() {
+        return null;
+    }
+
+    protected void showSwipeRefreshLayout() {
+        if (mSwipeRefreshLayout!=null){
+        // mSwipeRefreshLayout.setRefreshing(true);
+        mSwipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeRefreshLayout.setRefreshing(true);
+            }
+        });}
+    }
+
+    protected void hideSwipeRefreshLayout() {
+        if (mSwipeRefreshLayout!=null) {
+            mSwipeRefreshLayout.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
+            }, 600);
+        }
+    }
+
+
     protected <V extends View> V findById(int resId) {
         return (V) mRootLayout.findViewById(resId);
     }
@@ -119,6 +180,74 @@ public abstract class ClassicFragment extends Fragment {
             view.setOnClickListener(onNotFastClickListener);
         }
     }
+    /**
+     * =====================================private===========================
+     */
+    private  void  initSwipeRefreshLayout(){
+        if (configSwipeRefreshLayoutResId() == 0) {
+            return;
+        }
+        mSwipeRefreshLayout = findById(configSwipeRefreshLayoutResId());
+        // mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light, android.R.color.holo_green_light);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+        //mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                CLog.d("onRefresh刷新数据");
+                toRefreshData();
+            }
+        });
+    }
+
+    private void initRecyclerViewAndAdapter() {
+        if (configRecyclerViewResId() == 0) {
+            return;
+        }
+        /**
+         *设置RecyclerView
+         */
+        mRecyclerView = findById(configRecyclerViewResId());
+        if (configClassicRVHeaderFooterAdapter() == null) {
+            return;
+        }
+        //config
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        //mRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(mContext).build());
+
+        /**
+         *设置Adapter
+         */
+        mClassicRVHeaderFooterAdapter = configClassicRVHeaderFooterAdapter();
+            /**
+             *RecyclerView设置Adapter
+             */
+            mRecyclerView.setAdapter(mClassicRVHeaderFooterAdapter);
+
+            mRecyclerView.setOnTouchListener(new OnRecyclerViewTouchListener() {
+               @Override
+               public void onScrollUp() {
+
+               }
+
+               @Override
+               public void onScrollDown() {
+                   if (ViewTool.isReachedBottom(mRecyclerView)&&
+                           !mClassicRVHeaderFooterAdapter.isDataLoading()&&
+                           !mClassicRVHeaderFooterAdapter.isLoadComplete()
+                           ){
+                       toLoadMoreData();
+                   }
+               }
+           });
+
+
+
+    }
+
+
     /**
      * =====================================public===========================
      */

@@ -16,11 +16,11 @@ import java.util.List;
 
 public class CacheHelper {
     public static <T> T getData(String key) {
-        return (T) ACache.get(ContextHelper.getAppContext()).getAsObject(key);
+        return (T) ACache.get(ClassicContextHelper.getAppContext()).getAsObject(key);
     }
 
     public static void putData(String key, Serializable objectSerializable) {
-        ACache.get(ContextHelper.getAppContext()).put(key, objectSerializable);
+        ACache.get(ClassicContextHelper.getAppContext()).put(key, objectSerializable);
     }
 
     public static <T> void putDataList(String key, List<T> tList) {
@@ -30,30 +30,30 @@ public class CacheHelper {
     }
 
     public static String getString(String key) {
-        return ACache.get(ContextHelper.getAppContext()).getAsString(key);
+        return ACache.get(ClassicContextHelper.getAppContext()).getAsString(key);
     }
 
     public static void putString(String key, String value) {
-        ACache.get(ContextHelper.getAppContext()).put(key, value);
+        ACache.get(ClassicContextHelper.getAppContext()).put(key, value);
     }
 
     public static Bitmap getBitmap(String key) {
-        return ACache.get(ContextHelper.getAppContext()).getAsBitmap(key);
+        return ACache.get(ClassicContextHelper.getAppContext()).getAsBitmap(key);
     }
 
     public static void putBitmap(String key, Bitmap bitmap) {
-        ACache.get(ContextHelper.getAppContext()).put(key, bitmap);
+        ACache.get(ClassicContextHelper.getAppContext()).put(key, bitmap);
     }
 
     public static boolean remove(String key) {
-        return ACache.get(ContextHelper.getAppContext()).remove(key);
+        return ACache.get(ClassicContextHelper.getAppContext()).remove(key);
     }
 
     public static File getCacheFile(String key) {
-        return ACache.get(ContextHelper.getAppContext()).file(key);
+        return ACache.get(ClassicContextHelper.getAppContext()).file(key);
     }
 
     public static void clearAllCache() {
-        ACache.get(ContextHelper.getAppContext()).clear();
+        ACache.get(ClassicContextHelper.getAppContext()).clear();
     }
 }

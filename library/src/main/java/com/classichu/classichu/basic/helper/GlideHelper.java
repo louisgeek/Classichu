@@ -18,7 +18,6 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 /**
  * Created by louisgeek on 2016/11/5.
  */
-
 public class GlideHelper {
 
     public static void displayImage(ImageView imageView, String url, int width, int height) {
@@ -109,7 +108,7 @@ public class GlideHelper {
     }
 
     public static void loadImage(String url, final OnLoadImageBackListener onLoadImageBackListener) {
-        Glide.with(ContextHelper.getAppContext()).load(url)
+        Glide.with(ClassicContextHelper.getAppContext()).load(url)
                 .asBitmap()
                 .placeholder(R.drawable.ic_image_no)
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)

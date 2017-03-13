@@ -17,4 +17,10 @@ public abstract class ClassicMvpActivity<P extends ClassicPresenter>  extends Cl
     }
 
     protected abstract P setupPresenter();
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPresenter.recycleViewAndModel();
+    }
 }

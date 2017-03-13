@@ -20,5 +20,12 @@ public abstract class ClassicMvpFragment<P extends ClassicPresenter>  extends Cl
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mPresenter.recycleViewAndModel();
+    }
+
     protected abstract P setupPresenter();
 }
