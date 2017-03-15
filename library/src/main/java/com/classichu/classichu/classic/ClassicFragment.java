@@ -168,6 +168,7 @@ public abstract class ClassicFragment extends Fragment {
         bundle.putString(FinalData.BUNDLE_EXTRA_KEY_1, value1);
         return bundle;
     }
+
     /**
      * 防止重复点击的监听
      *
