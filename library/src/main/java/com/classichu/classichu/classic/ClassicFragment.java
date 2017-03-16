@@ -47,6 +47,7 @@ public abstract class ClassicFragment extends Fragment {
     protected RecyclerView mRecyclerView;
     protected ClassicRVHeaderFooterAdapter mClassicRVHeaderFooterAdapter;
     protected SwipeRefreshLayout mSwipeRefreshLayout;
+
     /**
      * ===================================protected lifecycle=============================
      */
@@ -80,6 +81,7 @@ public abstract class ClassicFragment extends Fragment {
         return mRootLayout;
         //return super.onCreateView(inflater, container, savedInstanceState);
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -99,18 +101,26 @@ public abstract class ClassicFragment extends Fragment {
      * =======================================protected===================================
      */
     protected void toRefreshData() {
+        if (mClassicRVHeaderFooterAdapter != null) {
+            mClassicRVHeaderFooterAdapter.showFooterViewNormal();
+            CLog.d("qqq toRefreshData");
+        }
 
-        mClassicRVHeaderFooterAdapter.showFooterViewNormal();
-        CLog.d("qqq toRefreshData");
     }
+
     protected void toLoadMoreData() {
-        //
-        mClassicRVHeaderFooterAdapter.showFooterViewDataLoading();
-        CLog.d("qqq toLoadMoreData");
+        if (mClassicRVHeaderFooterAdapter != null) {
+            //
+            mClassicRVHeaderFooterAdapter.showFooterViewDataLoading();
+            CLog.d("qqq toLoadMoreData");
+        }
+
     }
+
     protected int configRecyclerViewResId() {
         return 0;
     }
+
     protected int configSwipeRefreshLayoutResId() {
         return 0;
     }
@@ -120,18 +130,19 @@ public abstract class ClassicFragment extends Fragment {
     }
 
     protected void showSwipeRefreshLayout() {
-        if (mSwipeRefreshLayout!=null){
-        // mSwipeRefreshLayout.setRefreshing(true);
-        mSwipeRefreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                mSwipeRefreshLayout.setRefreshing(true);
-            }
-        });}
+        if (mSwipeRefreshLayout != null) {
+            // mSwipeRefreshLayout.setRefreshing(true);
+            mSwipeRefreshLayout.post(new Runnable() {
+                @Override
+                public void run() {
+                    mSwipeRefreshLayout.setRefreshing(true);
+                }
+            });
+        }
     }
 
     protected void hideSwipeRefreshLayout() {
-        if (mSwipeRefreshLayout!=null) {
+        if (mSwipeRefreshLayout != null) {
             mSwipeRefreshLayout.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -181,10 +192,11 @@ public abstract class ClassicFragment extends Fragment {
             view.setOnClickListener(onNotFastClickListener);
         }
     }
+
     /**
      * =====================================private===========================
      */
-    private  void  initSwipeRefreshLayout(){
+    private void initSwipeRefreshLayout() {
         if (configSwipeRefreshLayoutResId() == 0) {
             return;
         }
@@ -222,28 +234,27 @@ public abstract class ClassicFragment extends Fragment {
          *设置Adapter
          */
         mClassicRVHeaderFooterAdapter = configClassicRVHeaderFooterAdapter();
-            /**
-             *RecyclerView设置Adapter
-             */
-            mRecyclerView.setAdapter(mClassicRVHeaderFooterAdapter);
+        /**
+         *RecyclerView设置Adapter
+         */
+        mRecyclerView.setAdapter(mClassicRVHeaderFooterAdapter);
 
-            mRecyclerView.setOnTouchListener(new OnRecyclerViewTouchListener() {
-               @Override
-               public void onScrollUp() {
+        mRecyclerView.setOnTouchListener(new OnRecyclerViewTouchListener() {
+            @Override
+            public void onScrollUp() {
 
-               }
+            }
 
-               @Override
-               public void onScrollDown() {
-                   if (ViewTool.isReachedBottom(mRecyclerView)&&
-                           !mClassicRVHeaderFooterAdapter.isDataLoading()&&
-                           !mClassicRVHeaderFooterAdapter.isLoadComplete()
-                           ){
-                       toLoadMoreData();
-                   }
-               }
-           });
-
+            @Override
+            public void onScrollDown() {
+                if (ViewTool.isReachedBottom(mRecyclerView) &&
+                        !mClassicRVHeaderFooterAdapter.isDataLoading() &&
+                        !mClassicRVHeaderFooterAdapter.isLoadComplete()
+                        ) {
+                    toLoadMoreData();
+                }
+            }
+        });
 
 
     }
