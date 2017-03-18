@@ -1,7 +1,11 @@
 package com.louisgeek.classichu;
 
+import android.content.res.Resources;
+import android.util.TypedValue;
 import android.view.View;
 
+import com.classichu.classichu.app.CLog;
+import com.classichu.classichu.basic.tool.ScreenTool;
 import com.classichu.classichu.basic.tool.ToastTool;
 import com.classichu.classichu.classic.ClassicActivity;
 import com.classichu.titlebar.widget.ClassicTitleBar;
@@ -15,6 +19,15 @@ public class MainActivity extends ClassicActivity {
 
     @Override
     protected void initView() {
+        CLog.d("XXXX xzss:"+ ScreenTool.getScreenDensity());
+        int lonx=900;
+
+        CLog.d("XXXX COMPLEX_UNIT_DIP:"+ TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,lonx, Resources.getSystem().getDisplayMetrics()));
+        CLog.d("XXXX COMPLEX_UNIT_PX:"+ TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX,lonx, Resources.getSystem().getDisplayMetrics()));
+        CLog.d("XXXX COMPLEX_UNIT_PT:"+ TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PT,lonx, Resources.getSystem().getDisplayMetrics()));
+        CLog.d("XXXX COMPLEX_UNIT_SP:"+ TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,lonx, Resources.getSystem().getDisplayMetrics()));
+        CLog.d("XXXX COMPLEX_UNIT_IN:"+ TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_IN,lonx, Resources.getSystem().getDisplayMetrics()));
+        CLog.d("XXXX COMPLEX_UNIT_MM:"+ TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_MM,lonx, Resources.getSystem().getDisplayMetrics()));
 
       mClassicTitleBar.setCenterText("首页").setLeftText("1111").setRightText("2222")
                 //TODO ImageOrVectorResHelper

@@ -2,6 +2,7 @@ package com.classichu.classichu.basic.tool;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
@@ -27,6 +28,11 @@ public class ScreenTool {
         return displayMetrics.widthPixels;
 
     }
+    public static int getScreenWidth() {
+        DisplayMetrics displayMetrics = Resources.getSystem().getDisplayMetrics();
+        return displayMetrics.widthPixels;
+
+    }
 
     public static int getScreenWidth2(Context context) {
         WindowManager windowManager = (WindowManager) context
@@ -44,6 +50,11 @@ public class ScreenTool {
      */
     public static int getScreenHeight(Context context) {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        return displayMetrics.heightPixels;
+    }
+
+    public static int getScreenHeight() {
+        DisplayMetrics displayMetrics = Resources.getSystem().getDisplayMetrics();
         return displayMetrics.heightPixels;
     }
 
@@ -71,6 +82,16 @@ public class ScreenTool {
      */
     public static float getScreenDensity(Context context) {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        CLog.d("displayMetrics.density:" + displayMetrics.density);
+        CLog.d("displayMetrics.densityDpi:" + displayMetrics.densityDpi);
+        CLog.d("displayMetrics.scaledDensity:" + displayMetrics.scaledDensity);
+        CLog.d("displayMetrics.xdpi:" + displayMetrics.xdpi);
+        CLog.d("displayMetrics.ydpi:" + displayMetrics.ydpi);
+        return displayMetrics.density;
+    }
+
+    public static float getScreenDensity() {
+        DisplayMetrics displayMetrics = Resources.getSystem().getDisplayMetrics();
         CLog.d("displayMetrics.density:" + displayMetrics.density);
         CLog.d("displayMetrics.densityDpi:" + displayMetrics.densityDpi);
         CLog.d("displayMetrics.scaledDensity:" + displayMetrics.scaledDensity);
