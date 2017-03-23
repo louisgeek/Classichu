@@ -5,6 +5,7 @@ import java.io.InputStream;
 
 import okhttp3.Call;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 /**
  * Created by louisgeek on 2016/7/11.
@@ -24,9 +25,10 @@ public abstract class FileOkHttpCallback implements okhttp3.Callback {
     @Override
     public void onResponse(Call call, final Response response) throws IOException {
         if (response.isSuccessful()) {
+            ResponseBody responseBody=response.body();
             //文件流数据
-            InputStream inputStream = response.body().byteStream();
-
+            InputStream inputStream = responseBody.byteStream();
+            responseBody.close();
             //Log.d(TAG, "onResponse: inputStream:"+inputStream);
             this.OnSuccess(inputStream, response.code());
         } else {

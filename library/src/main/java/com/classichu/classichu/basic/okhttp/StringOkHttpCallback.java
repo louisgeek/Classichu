@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import okhttp3.Call;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 /**
  * Created by louisgeek on 2016/7/11.
@@ -25,7 +26,9 @@ public abstract class StringOkHttpCallback  implements okhttp3.Callback {
     @Override
     public void onResponse(Call call, final Response response) throws IOException {
         if (response.isSuccessful()){
-            final String response_body_result = response.body().string();
+            ResponseBody responseBody=response.body();
+            String response_body_result = responseBody.string();
+            responseBody.close();
             Log.d(TAG, "onResponse: response_body_result:"+response_body_result);
              this.OnSuccess(response_body_result,response.code());
         }else{

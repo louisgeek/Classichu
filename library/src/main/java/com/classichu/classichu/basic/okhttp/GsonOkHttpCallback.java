@@ -8,6 +8,7 @@ import java.io.IOException;
 
 import okhttp3.Call;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 /**
  * Created by louisgeek on 2016/7/11.
@@ -28,8 +29,11 @@ public abstract class GsonOkHttpCallback<T> implements okhttp3.Callback {
 
     @Override
     public void onResponse(Call call, final Response response) throws IOException {
-        String response_body_result = response.body().string();
+
         if (response.isSuccessful()) {
+            ResponseBody responseBody=response.body();
+            String response_body_result = responseBody.string();
+            responseBody.close();
             Log.d(TAG, "onResponse upxxx isSuccessful: response_body_result:" + response_body_result);
 
             final T t = this.OnSuccess(response_body_result, response.code());
@@ -47,7 +51,7 @@ public abstract class GsonOkHttpCallback<T> implements okhttp3.Callback {
             }
 
         } else {
-            Log.e(TAG, "onResponse upxxx Not isSuccessful: response_body_result:" + response_body_result);
+           Log.e(TAG, "onResponse upxxx Not isSuccessful:"+response.code() );
             this.OnError(response.message(), response.code());
         }
     }
