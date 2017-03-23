@@ -46,4 +46,9 @@ public class SystemHttpRequestManager implements IHttpRequestManager {
         });
     }
 
+    @Override
+    public void cancelRequest() {
+
+    }
+
 }

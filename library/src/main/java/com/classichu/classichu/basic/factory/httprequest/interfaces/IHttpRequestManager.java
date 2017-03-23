@@ -8,8 +8,7 @@ import java.util.Map;
 
 public interface IHttpRequestManager {
     void getUrlBackStr(String url, Map<String, String> headersMap, IHttpRequestCallback httpRequestCallback);
-
     void postUrlBackStr(String url, Map<String, String> headersMap, Map<String, String> paramsMap, IHttpRequestCallback httpRequestCallback);
-
+    void cancelRequest();
 
 }

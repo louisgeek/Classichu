@@ -159,6 +159,7 @@ public class MediaFileTool {
         addFileType("TXT", FILE_TYPE_TEXT, "text/plain");
         addFileType("HTM", FILE_TYPE_HTML, "text/html");
         addFileType("HTML", FILE_TYPE_HTML, "text/html");
+        addFileType("XML", FILE_TYPE_XML, "text/xml");
         addFileType("PDF", FILE_TYPE_PDF, "application/pdf");
         addFileType("DOC", FILE_TYPE_MS_WORD, "application/msword");
         addFileType("XLS", FILE_TYPE_MS_EXCEL, "application/vnd.ms-excel");

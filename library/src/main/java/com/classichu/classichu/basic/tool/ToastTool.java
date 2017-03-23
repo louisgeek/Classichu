@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import com.classichu.classichu.R;
 import com.classichu.classichu.app.ClassicApplication;
-import com.classichu.classichu.basic.helper.ClassicContextHelper;
 import com.classichu.classichu.basic.helper.VectorOrImageResHelper;
 
 
@@ -33,7 +32,7 @@ public class ToastTool {
      */
     private static Toast initToast(CharSequence message, int duration, int gravity) {
         if (mToast == null) {
-            mToast = Toast.makeText(ClassicApplication.getAppContext(), message, duration);
+            mToast = Toast.makeText(BaseTool.getAppContext(), message, duration);
         } else {
             mToast.setText(message);
             mToast.setDuration(duration);
@@ -88,13 +87,13 @@ public class ToastTool {
      * @return
      */
     private static Toast initImageToast(final String message, final Drawable drawable) {
-        Context context = ClassicContextHelper.getAppContext();
+        Context appContext=BaseTool.getAppContext();
         if (mImageToast == null) {
-            mImageToast = new Toast(context);
+            mImageToast = new Toast(appContext);
             mImageToast.setDuration(Toast.LENGTH_SHORT);
             mImageToast.setGravity(Gravity.CENTER, 0, 0);
             //
-            View view = LayoutInflater.from(context).inflate(R.layout.layout_toast_image, null);
+            View view = LayoutInflater.from(appContext).inflate(R.layout.layout_toast_image, null);
             TextView tv = (TextView) view.findViewById(R.id.id_tv_toast);
             tv.setText(TextUtils.isEmpty(message) ? "" : message);
             ImageView iv = (ImageView) view.findViewById(R.id.id_iv_toast);
@@ -129,7 +128,8 @@ public class ToastTool {
      * @return
      */
     public static void showImage(final String message, int imageResId) {
-        Drawable drawable = VectorOrImageResHelper.getDrawable(ClassicApplication.getAppContext(), imageResId);
+        Context appContext=BaseTool.getAppContext();
+        Drawable drawable = VectorOrImageResHelper.getDrawable(appContext, imageResId);
         initImageToast(message, drawable).show();
     }
 

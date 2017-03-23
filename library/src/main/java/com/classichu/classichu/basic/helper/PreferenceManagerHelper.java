@@ -12,7 +12,8 @@ public class PreferenceManagerHelper {
     public final static String CONFIG_NOPIC_KEY = "checkbox_preference_nopic";
 
     public static boolean isNoPic(Context context) {
-        SharedPreferences spConfigPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        Context appContext=context.getApplicationContext();
+        SharedPreferences spConfigPreferences = PreferenceManager.getDefaultSharedPreferences(appContext);
         return spConfigPreferences.getBoolean(CONFIG_NOPIC_KEY, true);
     }
 

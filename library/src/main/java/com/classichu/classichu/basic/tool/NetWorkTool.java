@@ -7,7 +7,6 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import com.classichu.classichu.app.CLog;
-import com.classichu.classichu.app.ClassicApplication;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
@@ -22,10 +21,10 @@ public class NetWorkTool {
 
     private static final String TAG = "NetWorkTool";
 
-    public static String getNetworkType(Context context) {
+    public static String getNetworkType() {
         String strNetworkType = "";
-
-        ConnectivityManager mConnectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        Context appContext=BaseTool.getAppContext();
+        ConnectivityManager mConnectivityManager = (ConnectivityManager) appContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = mConnectivityManager.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
             if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
@@ -80,9 +79,9 @@ public class NetWorkTool {
 
     //只判断网络连接是否可用
     public static boolean isNetWorkConnected() {
-        Context context = ClassicApplication.getAppContext();
+        Context appContext=BaseTool.getAppContext();
         boolean isConnection = false;
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivityManager = (ConnectivityManager) appContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (connectivityManager != null) {
             NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
             if (activeNetworkInfo != null && activeNetworkInfo.isConnected()) {
@@ -94,9 +93,9 @@ public class NetWorkTool {
 
     //只判断网络连接是否可用
     public static boolean isNetWorkConnected_Wifi() {
-        Context context = ClassicApplication.getAppContext();
+        Context appContext=BaseTool.getAppContext();
         boolean isConnection = false;
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivityManager = (ConnectivityManager) appContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (connectivityManager != null) {
             NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
             if (activeNetworkInfo != null && activeNetworkInfo.isConnected()) {
@@ -110,9 +109,9 @@ public class NetWorkTool {
 
     //只判断网络连接是否可用
     public static boolean isNetWorkConnected_Moblie() {
-        Context context = ClassicApplication.getAppContext();
+        Context appContext=BaseTool.getAppContext();
         boolean isConnection = false;
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivityManager = (ConnectivityManager) appContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (connectivityManager != null) {
             NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
             if (activeNetworkInfo != null && activeNetworkInfo.isConnected()) {

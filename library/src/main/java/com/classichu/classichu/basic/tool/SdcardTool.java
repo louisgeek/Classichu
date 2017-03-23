@@ -54,13 +54,14 @@ public class SdcardTool {
      * @param context
      * @return
      */
-    public static String getDiskCacheDirPath(Context context) {
+    public static String getDiskCacheDirPath() {
+        Context appContext=BaseTool.getAppContext();
         String cachePath ;
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
                 || !Environment.isExternalStorageRemovable()) {
-            cachePath = context.getExternalCacheDir().getPath();
+            cachePath = appContext.getExternalCacheDir().getPath();
         } else {
-            cachePath = context.getCacheDir().getPath();
+            cachePath = appContext.getCacheDir().getPath();
         }
         return cachePath;
     }

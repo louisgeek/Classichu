@@ -1,7 +1,7 @@
 package com.classichu.classichu.basic.lrucache;
 
 import com.classichu.classichu.app.CLog;
-import com.classichu.classichu.basic.helper.ClassicContextHelper;
+import com.classichu.classichu.basic.tool.BaseTool;
 
 /**
  * Created by louisgeek on 2016/11/10.
@@ -10,7 +10,7 @@ import com.classichu.classichu.basic.helper.ClassicContextHelper;
 public class LruCacheNormalLogicHelper {
 
     public static void findCacheLogic(String withoutTimeKey, final OnCacheLogicCallback onCacheLogicCallback) {
-        LruCacheStringTool.initFirst(ClassicContextHelper.getAppContext());
+        LruCacheStringTool.initFirst(BaseTool.getAppContext());
         String keyRawLazy = null;
         String keyRawLazy_online = getTenMinuteAppendKeyRawLazy(withoutTimeKey);
 

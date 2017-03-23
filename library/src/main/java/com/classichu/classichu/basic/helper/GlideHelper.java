@@ -8,6 +8,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.classichu.classichu.R;
+import com.classichu.classichu.basic.tool.BaseTool;
 import com.classichu.classichu.basic.tool.NetWorkTool;
 import com.classichu.classichu.basic.tool.ToastTool;
 
@@ -108,7 +109,7 @@ public class GlideHelper {
     }
 
     public static void loadImage(String url, final OnLoadImageBackListener onLoadImageBackListener) {
-        Glide.with(ClassicContextHelper.getAppContext()).load(url)
+        Glide.with(BaseTool.getAppContext()).load(url)
                 .asBitmap()
                 .placeholder(R.drawable.ic_image_no)
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)

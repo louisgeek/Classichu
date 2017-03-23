@@ -22,8 +22,9 @@ public class AppTool {
     /**
      * 获取应用程序的IMEI号
      */
-    public static String getIMEI(Context context) {
-        TelephonyManager telecomManager = (TelephonyManager) context
+    public static String getIMEI() {
+        Context appContext=BaseTool.getAppContext();
+        TelephonyManager telecomManager = (TelephonyManager) appContext
                 .getSystemService(Context.TELEPHONY_SERVICE);
         String imei = telecomManager.getDeviceId();
         return imei;
@@ -59,13 +60,14 @@ public class AppTool {
     /**
      * 获取自己应用程序的名称
      */
-    public static String getAppName(Context context) {
+    public static String getAppName() {
+        Context appContext=BaseTool.getAppContext();
         PackageManager packageManager = null;
         ApplicationInfo applicationInfo = null;
 
         try {
-            packageManager = context.getPackageManager();
-            applicationInfo = packageManager.getApplicationInfo(context.getPackageName(), 0);
+            packageManager = appContext.getPackageManager();
+            applicationInfo = packageManager.getApplicationInfo(appContext.getPackageName(), 0);
         } catch (PackageManager.NameNotFoundException var4) {
             applicationInfo = null;
         }
@@ -77,12 +79,13 @@ public class AppTool {
     /**
      * 获取自己应用程序的图标
      */
-    public static Bitmap getIconBitmap(Context context) {
+    public static Bitmap getIconBitmap() {
+        Context appContext=BaseTool.getAppContext();
         PackageManager packageManager = null;
         ApplicationInfo applicationInfo = null;
         try {
-            packageManager = context.getPackageManager();
-            applicationInfo = packageManager.getApplicationInfo(context.getPackageName(), 0);
+            packageManager = appContext.getPackageManager();
+            applicationInfo = packageManager.getApplicationInfo(appContext.getPackageName(), 0);
         } catch (PackageManager.NameNotFoundException e) {
             applicationInfo = null;
         }
@@ -97,10 +100,11 @@ public class AppTool {
      *
      * @return 当前应用的版本号
      */
-    public static int getVersionCode(Context context) {
+    public static int getVersionCode() {
         try {
-            PackageManager manager = context.getPackageManager();
-            PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
+            Context appContext=BaseTool.getAppContext();
+            PackageManager manager = appContext.getPackageManager();
+            PackageInfo info = manager.getPackageInfo(appContext.getPackageName(), 0);
             int version = info.versionCode;
             return version;
         } catch (Exception e) {
@@ -114,10 +118,11 @@ public class AppTool {
      *
      * @return 当前应用的版本名
      */
-    public static String getVersionName(Context context) {
+    public static String getVersionName() {
         try {
-            PackageManager manager = context.getPackageManager();
-            PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
+            Context appContext=BaseTool.getAppContext();
+            PackageManager manager = appContext.getPackageManager();
+            PackageInfo info = manager.getPackageInfo(appContext.getPackageName(), 0);
             String version = info.versionName;
             return version;
         } catch (Exception e) {
@@ -129,38 +134,38 @@ public class AppTool {
     /**
      * 获取应用程序包名
      */
-    public static String getPackageName(Context context) {
-        String pkgName = context.getPackageName();
+    public static String getPackageName() {
+        Context appContext=BaseTool.getAppContext();
+        String pkgName = appContext.getPackageName();
         return pkgName;
     }
 
     /**
      * 判断app是否在前台还是在后台运行
-     *
-     * @param context
      * @return
      */
-    public static boolean isAppRunBackground(Context context) {
-        ActivityManager activityManager = (ActivityManager) context
+    public static boolean isAppRunBackground() {
+        Context appContext=BaseTool.getAppContext();
+        ActivityManager activityManager = (ActivityManager) appContext
                 .getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningAppProcessInfo> appProcesses = activityManager
                 .getRunningAppProcesses();
         for (ActivityManager.RunningAppProcessInfo appProcess : appProcesses) {
-            if (appProcess.processName.equals(context.getPackageName())) {
+            if (appProcess.processName.equals(appContext.getPackageName())) {
                 /*
 				BACKGROUND=400 EMPTY=500 FOREGROUND=100
 				GONE=1000 PERCEPTIBLE=130 SERVICE=300 ISIBLE=200
 				 */
-                Log.i(context.getPackageName(), "louisz==此appimportace ="
+                Log.i(appContext.getPackageName(), "louisz==此appimportace ="
                         + appProcess.importance
                         + ",context.getClass().getName()="
-                        + context.getClass().getName());
+                        + appContext.getClass().getName());
                 if (appProcess.importance != ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
-                    Log.i(context.getPackageName(), "louisz==处于后台"
+                    Log.i(appContext.getPackageName(), "louisz==处于后台"
                             + appProcess.processName);
                     return true;
                 } else {
-                    Log.i(context.getPackageName(), "louisz==处于前台"
+                    Log.i(appContext.getPackageName(), "louisz==处于前台"
                             + appProcess.processName);
                     return false;
                 }

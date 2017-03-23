@@ -45,4 +45,9 @@ public class OKHttpRequestManager implements IHttpRequestManager {
             }
         }).build().doPostUrl(url);
     }
+
+    @Override
+    public void cancelRequest() {
+
+    }
 }

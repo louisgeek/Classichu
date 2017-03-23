@@ -15,19 +15,11 @@ import java.lang.reflect.Field;
  */
 
 public class ScreenTool {
-
-
     /**
      * 获得屏幕宽度
      *
-     * @param context
      * @return
      */
-    public static int getScreenWidth(Context context) {
-        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        return displayMetrics.widthPixels;
-
-    }
     public static int getScreenWidth() {
         DisplayMetrics displayMetrics = Resources.getSystem().getDisplayMetrics();
         return displayMetrics.widthPixels;
@@ -45,14 +37,8 @@ public class ScreenTool {
     /**
      * 获得屏幕高度
      *
-     * @param context
      * @return
      */
-    public static int getScreenHeight(Context context) {
-        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        return displayMetrics.heightPixels;
-    }
-
     public static int getScreenHeight() {
         DisplayMetrics displayMetrics = Resources.getSystem().getDisplayMetrics();
         return displayMetrics.heightPixels;
@@ -77,19 +63,8 @@ public class ScreenTool {
      * dpi为160时，density为1
      * density = (dpi*1.0)/ 160;
      *
-     * @param context
      * @return
      */
-    public static float getScreenDensity(Context context) {
-        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        CLog.d("displayMetrics.density:" + displayMetrics.density);
-        CLog.d("displayMetrics.densityDpi:" + displayMetrics.densityDpi);
-        CLog.d("displayMetrics.scaledDensity:" + displayMetrics.scaledDensity);
-        CLog.d("displayMetrics.xdpi:" + displayMetrics.xdpi);
-        CLog.d("displayMetrics.ydpi:" + displayMetrics.ydpi);
-        return displayMetrics.density;
-    }
-
     public static float getScreenDensity() {
         DisplayMetrics displayMetrics = Resources.getSystem().getDisplayMetrics();
         CLog.d("displayMetrics.density:" + displayMetrics.density);
@@ -109,10 +84,9 @@ public class ScreenTool {
     }
 
     /**
-     * @param context
      * @return
      */
-    public static int getStatusBarHeight(Context context) {
+    public static int getStatusBarHeight() {
         Class<?> clazz;
         Object obj;
         Field field;
@@ -123,7 +97,7 @@ public class ScreenTool {
             obj = clazz.newInstance();
             field = clazz.getField("status_bar_height");
             resourceId = Integer.parseInt(field.get(obj).toString());
-            statusBarHeight = context.getResources().getDimensionPixelSize(resourceId);
+            statusBarHeight = Resources.getSystem().getDimensionPixelSize(resourceId);
             //Log.v("@@@@@@", "the status bar height is : " + statusBarHeight);
         } catch (Exception e) {
             e.printStackTrace();
@@ -131,14 +105,13 @@ public class ScreenTool {
         return statusBarHeight;
     }
 
-    public static int getStatusBarHeight2(Context context) {
+    public static int getStatusBarHeight2() {
         int statusBarHeight = 0;
-        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        int resourceId = Resources.getSystem().getIdentifier("status_bar_height", "dimen", "android");
         if (resourceId > 0) {
-            statusBarHeight = context.getResources().getDimensionPixelSize(resourceId);
+            statusBarHeight = Resources.getSystem().getDimensionPixelSize(resourceId);
         }
         return statusBarHeight;
     }
-
 
 }

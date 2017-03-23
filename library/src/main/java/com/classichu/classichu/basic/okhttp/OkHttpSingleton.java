@@ -157,7 +157,10 @@ public class OkHttpSingleton {
 
         mOkHttpClient.newCall(request).enqueue(responseCallback);
     }
-
+   @Deprecated
+    public void doCancel(){
+       //## mOkHttpClient.newCall().cancel();
+    }
 
     public void doPost(String url, Map<String, String> defaultHeadersMap, Map<String, String> customHeadersMap, String paramsStr, Callback responseCallback) {
         //创建一个请求对象

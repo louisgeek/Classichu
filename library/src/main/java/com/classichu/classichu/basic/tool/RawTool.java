@@ -1,6 +1,6 @@
 package com.classichu.classichu.basic.tool;
 
-import android.content.Context;
+import android.content.res.Resources;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,13 +17,13 @@ public class RawTool {
      * @param rawID
      * @return
      */
-    public static String getStringFromRaw(Context context, int rawID) {
+    public static String getStringFromRaw(int rawID) {
         StringBuilder sb_result = new StringBuilder("");
         InputStream ssq_is = null;
         InputStreamReader inputReader = null;
         BufferedReader bufReader = null;
         try {
-            ssq_is = context.getResources().openRawResource(rawID);
+            ssq_is = Resources.getSystem().openRawResource(rawID);
 
             inputReader = new InputStreamReader(ssq_is);
             //InputStreamReader inputReader = new InputStreamReader(ssq_is,"UTF-8");
@@ -46,13 +46,13 @@ public class RawTool {
         return sb_result.toString();
     }
 
-    public static String getStringFromRawWithRN(Context context, int rawID) {
+    public static String getStringFromRawWithRN(int rawID) {
         StringBuilder sb_result = new StringBuilder("");
         InputStream ssq_is = null;
         InputStreamReader inputReader = null;
         BufferedReader bufReader = null;
         try {
-            ssq_is = context.getResources().openRawResource(rawID);
+            ssq_is = Resources.getSystem().openRawResource(rawID);
 
             inputReader = new InputStreamReader(ssq_is);
             //InputStreamReader inputReader = new InputStreamReader(ssq_is,"UTF-8");
@@ -83,15 +83,14 @@ public class RawTool {
     /**
      * 很多行 会卡死
      *
-     * @param context
      * @param rawID
      * @return
      */
     @Deprecated
-    public static String getStringFromRawOld(Context context, int rawID) {
+    public static String getStringFromRawOld(int rawID) {
         String result = "";
         try {
-            InputStream ssq_is = context.getResources().openRawResource(rawID);
+            InputStream ssq_is =Resources.getSystem().openRawResource(rawID);
 
             InputStreamReader inputReader = new InputStreamReader(ssq_is);
             //InputStreamReader inputReader = new InputStreamReader(ssq_is,"UTF-8");
