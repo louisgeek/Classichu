@@ -11,7 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.classichu.classichu.R;
-import com.classichu.classichu.app.ClassicApplication;
 import com.classichu.classichu.basic.helper.VectorOrImageResHelper;
 
 
@@ -129,7 +128,7 @@ public class ToastTool {
      */
     public static void showImage(final String message, int imageResId) {
         Context appContext=BaseTool.getAppContext();
-        Drawable drawable = VectorOrImageResHelper.getDrawable(appContext, imageResId);
+        Drawable drawable = VectorOrImageResHelper.getDrawable(imageResId);
         initImageToast(message, drawable).show();
     }
 

@@ -25,7 +25,7 @@ public class GlideHelper {
         if (!NetWorkTool.isNetWorkConnected()){
             return;
         }
-        boolean isNoPic = PreferenceManagerHelper.isNoPic(imageView.getContext());
+        boolean isNoPic = PreferenceManagerHelper.isNoPic();
         if (!NetWorkTool.isNetWorkConnected_Wifi()) {//不是wifi
             if (isNoPic) {//设置移动网络下无图
                 ToastTool.showImageInfo("移动网络下不加载图片！");
@@ -40,7 +40,7 @@ public class GlideHelper {
         if (!NetWorkTool.isNetWorkConnected()){
             return;
         }
-        boolean isNoPic = PreferenceManagerHelper.isNoPic(imageView.getContext());
+        boolean isNoPic = PreferenceManagerHelper.isNoPic();
         if (!NetWorkTool.isNetWorkConnected_Wifi()) {//不是wifi
             if (isNoPic) {//设置移动网络下无图
                 ToastTool.showImageInfo("移动网络下不加载图片！");
@@ -55,7 +55,7 @@ public class GlideHelper {
         if (!NetWorkTool.isNetWorkConnected()){
             return;
         }
-        boolean isNoPic = PreferenceManagerHelper.isNoPic(imageView.getContext());
+        boolean isNoPic = PreferenceManagerHelper.isNoPic();
         if (!NetWorkTool.isNetWorkConnected_Wifi()) {//不是wifi
             if (isNoPic) {//设置移动网络下无图
                 ToastTool.showImageInfo("移动网络下不加载图片！");
