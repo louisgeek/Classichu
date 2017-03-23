@@ -15,7 +15,8 @@ public class ServiceUtil {
      * @return
      */
     public static boolean isServiceRunning(Context context,String serviceClassName) {
-        final ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        Context appContext=BaseTool.getAppContext();
+        final ActivityManager activityManager = (ActivityManager) appContext.getSystemService(Context.ACTIVITY_SERVICE);
         final List<ActivityManager.RunningServiceInfo> services = activityManager.getRunningServices(Integer.MAX_VALUE); //这个value取任意大于1的值，但返回的列表大小可能比这个值小。
 
         for (ActivityManager.RunningServiceInfo runningServiceInfo : services) {

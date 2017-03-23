@@ -11,16 +11,16 @@ import java.util.Map;
  */
 
 public class SharedPreferencesTool {
-    private static String FILLNAME = "koo_config_sp";
+    private static String FILLNAME = "classic_config_sp";
         /**
          * 存入某个key对应的value值
          *
-         * @param context
          * @param key
          * @param value
          */
-        public static void put(Context context, String key, Object value) {
-            SharedPreferences sp = context.getSharedPreferences(FILLNAME, Context.MODE_PRIVATE);
+        public static void put(String key, Object value) {
+            Context appContext=BaseTool.getAppContext();
+            SharedPreferences sp = appContext.getSharedPreferences(FILLNAME, Context.MODE_PRIVATE);
             SharedPreferences.Editor edit = sp.edit();
             if (value instanceof String) {
                 edit.putString(key, (String) value);
@@ -39,13 +39,13 @@ public class SharedPreferencesTool {
         /**
          * 得到某个key对应的值
          *
-         * @param context
          * @param key
          * @param defValue
          * @return
          */
-        public static Object get(Context context, String key, Object defValue) {
-            SharedPreferences sp = context.getSharedPreferences(FILLNAME, Context.MODE_PRIVATE);
+        public static Object get( String key, Object defValue) {
+            Context appContext=BaseTool.getAppContext();
+            SharedPreferences sp = appContext.getSharedPreferences(FILLNAME, Context.MODE_PRIVATE);
             if (defValue instanceof String) {
                 return sp.getString(key, (String) defValue);
             } else if (defValue instanceof Integer) {
@@ -86,11 +86,11 @@ public class SharedPreferencesTool {
 
         /**
          * 清除所有内容
-         *
-         * @param context
+
          */
-        public static void clear(Context context) {
-            SharedPreferences sp = context.getSharedPreferences(FILLNAME, Context.MODE_PRIVATE);
+        public static void clear() {
+            Context appContext=BaseTool.getAppContext();
+            SharedPreferences sp = appContext.getSharedPreferences(FILLNAME, Context.MODE_PRIVATE);
             SharedPreferences.Editor edit = sp.edit();
             edit.clear();
             SharedPreferencesCompat.EditorCompat.getInstance().apply(edit);

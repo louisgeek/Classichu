@@ -51,7 +51,6 @@ public class SdcardTool {
      * 否则就调用getCacheDir()方法来获取缓存路径。
      * 前者获取到的就是 /sdcard/Android/data/<application package>/cache 这个路径，
      * 而后者获取到的是 /data/data/<application package>/cache 这个路径
-     * @param context
      * @return
      */
     public static String getDiskCacheDirPath() {
@@ -67,11 +66,11 @@ public class SdcardTool {
     }
     /**
      * 得到/data/data/<application package>/cache
-     * @param context
      * @return
      */
-    public static String getCacheDirPath(Context context) {
-        String cachePath = context.getCacheDir().getPath();
+    public static String getCacheDirPath() {
+        Context appContext=BaseTool.getAppContext();
+        String cachePath = appContext.getCacheDir().getPath();
         return cachePath;
     }
 }

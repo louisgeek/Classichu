@@ -26,8 +26,9 @@ public class ScreenTool {
 
     }
 
-    public static int getScreenWidth2(Context context) {
-        WindowManager windowManager = (WindowManager) context
+    public static int getScreenWidth2() {
+        Context appContext=BaseTool.getAppContext();
+        WindowManager windowManager = (WindowManager) appContext
                 .getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics outMetrics = new DisplayMetrics();
         windowManager.getDefaultDisplay().getMetrics(outMetrics);
@@ -50,8 +51,9 @@ public class ScreenTool {
         return displaymetrics.heightPixels;
     }
 
-    public static int getScreenHeight3(Context context) {
-        WindowManager windowManager = (WindowManager) context
+    public static int getScreenHeight3() {
+        Context appContext=BaseTool.getAppContext();
+        WindowManager windowManager = (WindowManager) appContext
                 .getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics outMetrics = new DisplayMetrics();
         windowManager.getDefaultDisplay().getMetrics(outMetrics);
@@ -75,8 +77,9 @@ public class ScreenTool {
         return displayMetrics.density;
     }
 
-    public static float getScreenDensity2(Context context) {
-        WindowManager windowManager = (WindowManager) context
+    public static float getScreenDensity2() {
+        Context appContext=BaseTool.getAppContext();
+        WindowManager windowManager = (WindowManager) appContext
                 .getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics outMetrics = new DisplayMetrics();
         windowManager.getDefaultDisplay().getMetrics(outMetrics);

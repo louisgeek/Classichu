@@ -12,6 +12,7 @@ import android.provider.Settings;
 import android.util.Log;
 
 import com.classichu.classichu.basic.tool.AppTool;
+import com.classichu.classichu.basic.tool.BaseTool;
 import com.classichu.classichu.basic.tool.ToastTool;
 
 import java.util.List;
@@ -24,49 +25,49 @@ import java.util.List;
  */
 public class GoToSysConfigHelper {
 
-    public static  void  goToNormalEnterWithManufacturer(Context context){
+    public static  void  goToNormalEnterWithManufacturer(){
         try {
         String manufacturer= AppTool.getDeviceManufacturer();
 
         switch (manufacturer.toLowerCase()){
             case "huawei":
-                goToSysConfigAppPermissionsHuaWei(context);
+                goToSysConfigAppPermissionsHuaWei();
                 break;
             case "xiaomi":
-                goToSysConfigAppPermissionsXiaoMi(context);
+                goToSysConfigAppPermissionsXiaoMi();
                 break;
             case "meizu":
-                goToSysConfigAppPermissionsMeizu(context);
+                goToSysConfigAppPermissionsMeizu();
                 break;
             case "oppo":
-                goToSysConfigAppPermissionsOppo(context);
+                goToSysConfigAppPermissionsOppo();
                 break;
             //VIVO X6S Plus 系统一直处理  弹出是否允许和引导
             case "vivo":
-                goToSysConfigAppPermissionsVivo(context);
+                goToSysConfigAppPermissionsVivo();
                 break;
             case "samsung":
-                goToSysConfigAppPermissionsSamsung(context);
+                goToSysConfigAppPermissionsSamsung();
                 break;
             case "coolpad":
-                goToSysConfigAppPermissionsCoolpad(context);
+                goToSysConfigAppPermissionsCoolpad();
                 break;
             case "lenovo":
             case "gionee":
             default:
-                goToSysConfigAppInfoSettings(context);
+                goToSysConfigAppInfoSettings();
                 break;
         }
         }catch (Exception e){
             Log.e("kkk 1", "e: "+e.getMessage());
             ToastTool.showLong("kkk 1 e: "+e.getMessage());
            try {
-               goToSysConfigAppInfoSettings2(context);
+               goToSysConfigAppInfoSettings2();
            }catch (Exception e1)
            {
                Log.e("kkk 2", "e1: "+e1.getMessage());
                ToastTool.showLong("kkk 2 e1: "+e1.getMessage());
-               goToSysConfigSettings(context);
+               goToSysConfigSettings();
            }
         }
     }
@@ -74,12 +75,12 @@ public class GoToSysConfigHelper {
 
     /**
      * 应用信息（有些厂家会直接在应用信息提供权限管理入口）
-     * @param context
      *
      * Meizu note2 测试通过
      */
     @Deprecated
-    public static  void  goToSysConfigAppInfoSettings2(Context context){
+    public static  void  goToSysConfigAppInfoSettings2(){
+        Context appContext =BaseTool.getAppContext();
         Intent intent = new Intent();
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         if (Build.VERSION.SDK_INT >= 9) {
@@ -90,81 +91,87 @@ public class GoToSysConfigHelper {
             intent.setClassName("com.android.settings", "com.android.settings.InstalledAppDetails");
             intent.putExtra("com.android.settings.ApplicationPkgName", AppTool.getPackageName());
         }
-        context.startActivity(intent);
+        appContext.startActivity(intent);
     }
     /**
      * 跳转系统的蓝牙设置界面
-     * @param context
      */
-    public static    void  goToSysConfigBluetooth(Context context){
+    public static    void  goToSysConfigBluetooth(){
+        Context appContext =BaseTool.getAppContext();
         Intent intent = new Intent(Settings.ACTION_BLUETOOTH_SETTINGS);
-        context.startActivity(intent);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        appContext.startActivity(intent);
     }
     /**
      * 跳转到设置界面
-     * @param context
      */
-    public static    void  goToSysConfigSettings(Context context){
+    public static    void  goToSysConfigSettings(){
+        Context appContext =BaseTool.getAppContext();
         Intent intent =  new Intent(Settings.ACTION_SETTINGS);
-        context.startActivity(intent);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        appContext.startActivity(intent);
     }
     /**
      * 根据包名跳转到系统自带的应用程序信息界面
-     * @param context
      */
-    public static void goToSysConfigAppInfoSettings(Context context){
+    public static void goToSysConfigAppInfoSettings(){
         try {
+            Context appContext =BaseTool.getAppContext();
         Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Uri uri = Uri.fromParts("package", AppTool.getPackageName(), null);
         intent.setData(uri);
-        context.startActivity(intent);
+        appContext.startActivity(intent);
         }catch (Exception e){
             e.printStackTrace();
         }
     }
 
-    private static  void  goToSysConfigAppPermissionsHuaWei(Context context){
+    private static  void  goToSysConfigAppPermissionsHuaWei(){
+        Context appContext =BaseTool.getAppContext();
         Intent intent = new Intent();
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("packageName", AppTool.getPackageName());
         ComponentName comp = new ComponentName("com.huawei.systemmanager",
                 "com.huawei.permissionmanager.ui.MainActivity");
         intent.setComponent(comp);
-        context.startActivity(intent);
+        appContext.startActivity(intent);
     }
     /**
      * redmi 3s （包括6.0以上和以下）测试通过
-     * @param context
      */
-    private static  void  goToSysConfigAppPermissionsXiaoMi(Context context){
+    private static  void  goToSysConfigAppPermissionsXiaoMi(){
+        Context appContext =BaseTool.getAppContext();
         Intent intent = new Intent("miui.intent.action.APP_PERM_EDITOR");
         ComponentName componentName = new ComponentName("com.miui.securitycenter", "com.miui.permcenter.permissions.AppPermissionsEditorActivity");
         intent.setComponent(componentName);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("extra_pkgname", AppTool.getPackageName());
-        context.startActivity(intent);
+        appContext.startActivity(intent);
     }
     /**
      * Meizu note2
-     * @param context
      */
-    private  static void  goToSysConfigAppPermissionsMeizu(Context context){
+    private  static void  goToSysConfigAppPermissionsMeizu(){
+        Context appContext =BaseTool.getAppContext();
         Intent intent = new Intent("com.meizu.safe.security.SHOW_APPSEC");
         intent.addCategory(Intent.CATEGORY_DEFAULT);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("packageName", AppTool.getPackageName());
-        context.startActivity(intent);
+        appContext.startActivity(intent);
     }
 
     /**
      * oppo a33测试通过
-     * @param context
      */
-    private  static void  goToSysConfigAppPermissionsOppo(Context context){
+    private  static void  goToSysConfigAppPermissionsOppo(){
+        Context appContext =BaseTool.getAppContext();
         Intent intent = new Intent();
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("packageName", AppTool.getPackageName());
         ComponentName comp = new ComponentName("com.color.safecenter", "com.color.safecenter.permission.PermissionManagerActivity");
         intent.setComponent(comp);
-        context.startActivity(intent);
+        appContext.startActivity(intent);
     }
 
     /**
@@ -174,67 +181,77 @@ public class GoToSysConfigHelper {
      本质上没有什么区别，通过Intent open...打开比调用doStartApplicationWithPackageName方法更快，也是android本身提供的方法
      */
     @Deprecated //单纯的跳转到oppo测试
-    private static void goToSysConfigAppPermissionsOppo2(Context context){
+    private static void goToSysConfigAppPermissionsOppo2(){
+        Context appContext =BaseTool.getAppContext();
         //#### doStartApplicationWithPackageName(context,"com.coloros.safecenter");
-        Intent openIntent = context.getPackageManager().getLaunchIntentForPackage("com.color.safecenter");
-        context.startActivity(openIntent);
+        Intent openIntent = appContext.getPackageManager().getLaunchIntentForPackage("com.color.safecenter");
+        openIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        appContext.startActivity(openIntent);
     }
-    private static void goToSysConfigAppPermissionsVivo(Context context){
+    private static void goToSysConfigAppPermissionsVivo(){
+        Context appContext =BaseTool.getAppContext();
         //####  doStartApplicationWithPackageName(context,"com.vivo.securedaemonservice");
-        Intent openIntent = context.getPackageManager().getLaunchIntentForPackage("com.vivo.securedaemonservice");
-        context.startActivity(openIntent);
+        Intent openIntent = appContext.getPackageManager().getLaunchIntentForPackage("com.vivo.securedaemonservice");
+        openIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        appContext.startActivity(openIntent);
     }
 
-    private static void goToSysConfigAppPermissionsCoolpad(Context context){
+    private static void goToSysConfigAppPermissionsCoolpad(){
+        Context appContext =BaseTool.getAppContext();
        //#### doStartApplicationWithPackageName(context,"com.yulong.android.security:remote");
-        Intent openIntent = context.getPackageManager().getLaunchIntentForPackage("com.yulong.android.security:remote");
-       context.startActivity(openIntent);
+        Intent openIntent = appContext.getPackageManager().getLaunchIntentForPackage("com.yulong.android.security:remote");
+        openIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        appContext.startActivity(openIntent);
     }
-    private static void goToSysConfigAppPermissionsSamsung(Context context){
+    private static void goToSysConfigAppPermissionsSamsung(){
         //三星4.3可以直接跳转
-        goToSysConfigAppInfoSettings(context);
+        goToSysConfigAppInfoSettings();
     }
 
-    private  static void  goToSysConfigAppPermissionsSony(Context context){
+    private  static void  goToSysConfigAppPermissionsSony(){
+        Context appContext =BaseTool.getAppContext();
         Intent intent = new Intent();
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("packageName",AppTool.getPackageName());
         ComponentName comp = new ComponentName("com.sonymobile.cta", "com.sonymobile.cta.SomcCTAMainActivity");
         intent.setComponent(comp);
-        context.startActivity(intent);
+        appContext.startActivity(intent);
     }
-    private  static void  goToSysConfigAppPermissionsLetv(Context context){
+    private  static void  goToSysConfigAppPermissionsLetv(){
+        Context appContext =BaseTool.getAppContext();
         Intent intent = new Intent();
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("packageName", AppTool.getPackageName());
         ComponentName comp = new ComponentName("com.letv.android.letvsafe", "com.letv.android.letvsafe.PermissionAndApps");
         intent.setComponent(comp);
-        context.startActivity(intent);
+        appContext.startActivity(intent);
     }
-    private  static void  goToSysConfigAppPermissionsLG(Context context){
+    private  static void  goToSysConfigAppPermissionsLG(){
+        Context appContext =BaseTool.getAppContext();
         Intent intent = new Intent("android.intent.action.MAIN");
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("packageName", AppTool.getPackageName());
         ComponentName comp = new ComponentName("com.android.settings", "com.android.settings.Settings$AccessLockSummaryActivity");
         intent.setComponent(comp);
-        context.startActivity(intent);
+        appContext.startActivity(intent);
     }
-    private  static void  goToSysConfigAppPermissions360(Context context){
+    private  static void  goToSysConfigAppPermissions360(){
+        Context appContext =BaseTool.getAppContext();
         Intent intent = new Intent("android.intent.action.MAIN");
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("packageName", AppTool.getPackageName());
         ComponentName comp = new ComponentName("com.qihoo360.mobilesafe", "com.qihoo360.mobilesafe.ui.index.AppEnterActivity");
         intent.setComponent(comp);
-        context.startActivity(intent);
+        appContext.startActivity(intent);
     }
 
     @Deprecated
-    private void doStartApplicationWithPackageName(Context context,String packageName) {
-
+    private void doStartApplicationWithPackageName(String packageName) {
+        Context appContext =BaseTool.getAppContext();
         // 通过包名获取此APP详细信息，包括Activities、services、versioncode、name等等
         PackageInfo packageinfo = null;
         try {
-            packageinfo = context.getPackageManager().getPackageInfo(packageName, 0);
+            packageinfo = appContext.getPackageManager().getPackageInfo(packageName, 0);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
@@ -244,9 +261,10 @@ public class GoToSysConfigHelper {
         // 创建一个类别为CATEGORY_LAUNCHER的该包名的Intent
         Intent resolveIntent = new Intent(Intent.ACTION_MAIN, null);
         resolveIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        resolveIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//待测试 是否需要
         resolveIntent.setPackage(packageinfo.packageName);
         // 通过getPackageManager()的queryIntentActivities方法遍历
-        List<ResolveInfo> resolveinfoList = context.getPackageManager()
+        List<ResolveInfo> resolveinfoList = appContext.getPackageManager()
                 .queryIntentActivities(resolveIntent, 0);
         Log.i("MainActivity","resolveinfoList"+resolveinfoList.size());
         for (int i = 0; i < resolveinfoList.size(); i++) {
@@ -261,14 +279,15 @@ public class GoToSysConfigHelper {
             // LAUNCHER Intent
             Intent intent = new Intent(Intent.ACTION_MAIN);
             intent.addCategory(Intent.CATEGORY_LAUNCHER);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             // 设置ComponentName参数1:packagename参数2:MainActivity路径
             ComponentName cn = new ComponentName(packagename, className);
             intent.setComponent(cn);
             try {
-                context.startActivity(intent);
+                appContext.startActivity(intent);
             }catch (Exception e){
                 //!!!
-                goToSysConfigAppInfoSettings(context);
+                goToSysConfigAppInfoSettings();
                 e.printStackTrace();
             }
         }

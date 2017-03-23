@@ -2,7 +2,7 @@ package com.classichu.classichu.basic.tool;
 
 import android.content.Context;
 
-import com.classichu.classichu.basic.helper.ClassicContextHelper;
+import com.classichu.classichu.app.ClassicApplication;
 
 /**
  * Created by louisgeek on 2017/3/23.
@@ -10,6 +10,6 @@ import com.classichu.classichu.basic.helper.ClassicContextHelper;
 
 public class BaseTool {
     public static Context getAppContext() {
-        return ClassicContextHelper.getAppContext();
+        return ClassicApplication.getAppContext();
     }
 }

@@ -174,16 +174,19 @@ public class AppTool {
         return false;
     }
 
-    public static void installApk(Context context, String filePath) {
+    public static void installApk( String filePath) {
+        Context appContext=BaseTool.getAppContext();
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setDataAndType(Uri.parse("file://" + filePath), "application/vnd.android.package-archive");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
+        appContext.startActivity(intent);
     }
 
-    public static void uninstallApk(Context context) {
+    public static void uninstallApk() {
+        Context appContext=BaseTool.getAppContext();
         Uri uri = Uri.parse("package:com.xxx.xxx");
         Intent intent = new Intent(Intent.ACTION_DELETE, uri);
-        context.startActivity(intent);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        appContext.startActivity(intent);
     }
 }

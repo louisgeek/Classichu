@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.classichu.classichu.basic.tool.BaseTool;
+
 /**
  * Created by louisgeek on 2016/12/19.
  */
@@ -11,8 +13,8 @@ import android.preference.PreferenceManager;
 public class PreferenceManagerHelper {
     public final static String CONFIG_NOPIC_KEY = "checkbox_preference_nopic";
 
-    public static boolean isNoPic(Context context) {
-        Context appContext=context.getApplicationContext();
+    public static boolean isNoPic() {
+        Context appContext = BaseTool.getAppContext();
         SharedPreferences spConfigPreferences = PreferenceManager.getDefaultSharedPreferences(appContext);
         return spConfigPreferences.getBoolean(CONFIG_NOPIC_KEY, true);
     }
