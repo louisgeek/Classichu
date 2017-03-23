@@ -75,13 +75,13 @@ public class LruCacheBitmapTool {
 
     private static void initDiskLruCache(Context context) {
         try {
-            File diskCacheDir = new File(SdcardTool.getDiskCacheDirPath(context) + File.separator + DISKLRUCACHE_BITMAP_UNIQUE_NAME);
+            File diskCacheDir = new File(SdcardTool.getDiskCacheDirPath() + File.separator + DISKLRUCACHE_BITMAP_UNIQUE_NAME);
             if (!diskCacheDir.exists()) {
                 diskCacheDir.mkdirs();
             }
             if (diskCacheDir.getUsableSpace() > DISKLRUCACHE_MAX_SIZE) {
                 //剩余空间大于我们指定的磁盘缓存大小
-                mDiskLruCache = DiskLruCache.open(diskCacheDir, AppTool.getVersionCode(context),
+                mDiskLruCache = DiskLruCache.open(diskCacheDir, AppTool.getVersionCode(),
                         DISKLRUCACHE_VALUE_COUNT, DISKLRUCACHE_MAX_SIZE);
             }else{
                 Log.e(TAG, "initDiskLruCache:磁盘大小不足");

@@ -26,7 +26,7 @@ public class PasswordToggleViewTool {
 
     public static void fixPasswordToggleViewInCenter(TextInputLayout id_til_password) {
         if (id_til_password!=null){
-        fixPasswordToggleViewInCenter(id_til_password, SizeTool.dp2px(id_til_password.getContext(), -4));
+        fixPasswordToggleViewInCenter(id_til_password, SizeTool.dp2px(-4));
         }
     }
 }

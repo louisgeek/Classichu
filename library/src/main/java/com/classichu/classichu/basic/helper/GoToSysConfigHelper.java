@@ -84,11 +84,11 @@ public class GoToSysConfigHelper {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         if (Build.VERSION.SDK_INT >= 9) {
             intent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
-            intent.setData(Uri.fromParts("package", AppTool.getPackageName(context), null));
+            intent.setData(Uri.fromParts("package", AppTool.getPackageName(), null));
         } else if (Build.VERSION.SDK_INT <= 8) {
             intent.setAction(Intent.ACTION_VIEW);
             intent.setClassName("com.android.settings", "com.android.settings.InstalledAppDetails");
-            intent.putExtra("com.android.settings.ApplicationPkgName", AppTool.getPackageName(context));
+            intent.putExtra("com.android.settings.ApplicationPkgName", AppTool.getPackageName());
         }
         context.startActivity(intent);
     }
@@ -115,7 +115,7 @@ public class GoToSysConfigHelper {
     public static void goToSysConfigAppInfoSettings(Context context){
         try {
         Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-        Uri uri = Uri.fromParts("package", AppTool.getPackageName(context), null);
+        Uri uri = Uri.fromParts("package", AppTool.getPackageName(), null);
         intent.setData(uri);
         context.startActivity(intent);
         }catch (Exception e){
@@ -126,7 +126,7 @@ public class GoToSysConfigHelper {
     private static  void  goToSysConfigAppPermissionsHuaWei(Context context){
         Intent intent = new Intent();
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra("packageName", AppTool.getPackageName(context));
+        intent.putExtra("packageName", AppTool.getPackageName());
         ComponentName comp = new ComponentName("com.huawei.systemmanager",
                 "com.huawei.permissionmanager.ui.MainActivity");
         intent.setComponent(comp);
@@ -140,7 +140,7 @@ public class GoToSysConfigHelper {
         Intent intent = new Intent("miui.intent.action.APP_PERM_EDITOR");
         ComponentName componentName = new ComponentName("com.miui.securitycenter", "com.miui.permcenter.permissions.AppPermissionsEditorActivity");
         intent.setComponent(componentName);
-        intent.putExtra("extra_pkgname", AppTool.getPackageName(context));
+        intent.putExtra("extra_pkgname", AppTool.getPackageName());
         context.startActivity(intent);
     }
     /**
@@ -150,7 +150,7 @@ public class GoToSysConfigHelper {
     private  static void  goToSysConfigAppPermissionsMeizu(Context context){
         Intent intent = new Intent("com.meizu.safe.security.SHOW_APPSEC");
         intent.addCategory(Intent.CATEGORY_DEFAULT);
-        intent.putExtra("packageName", AppTool.getPackageName(context));
+        intent.putExtra("packageName", AppTool.getPackageName());
         context.startActivity(intent);
     }
 
@@ -161,7 +161,7 @@ public class GoToSysConfigHelper {
     private  static void  goToSysConfigAppPermissionsOppo(Context context){
         Intent intent = new Intent();
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra("packageName", AppTool.getPackageName(context));
+        intent.putExtra("packageName", AppTool.getPackageName());
         ComponentName comp = new ComponentName("com.color.safecenter", "com.color.safecenter.permission.PermissionManagerActivity");
         intent.setComponent(comp);
         context.startActivity(intent);
@@ -198,7 +198,7 @@ public class GoToSysConfigHelper {
     private  static void  goToSysConfigAppPermissionsSony(Context context){
         Intent intent = new Intent();
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra("packageName",AppTool.getPackageName(context));
+        intent.putExtra("packageName",AppTool.getPackageName());
         ComponentName comp = new ComponentName("com.sonymobile.cta", "com.sonymobile.cta.SomcCTAMainActivity");
         intent.setComponent(comp);
         context.startActivity(intent);
@@ -206,7 +206,7 @@ public class GoToSysConfigHelper {
     private  static void  goToSysConfigAppPermissionsLetv(Context context){
         Intent intent = new Intent();
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra("packageName", AppTool.getPackageName(context));
+        intent.putExtra("packageName", AppTool.getPackageName());
         ComponentName comp = new ComponentName("com.letv.android.letvsafe", "com.letv.android.letvsafe.PermissionAndApps");
         intent.setComponent(comp);
         context.startActivity(intent);
@@ -214,7 +214,7 @@ public class GoToSysConfigHelper {
     private  static void  goToSysConfigAppPermissionsLG(Context context){
         Intent intent = new Intent("android.intent.action.MAIN");
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra("packageName", AppTool.getPackageName(context));
+        intent.putExtra("packageName", AppTool.getPackageName());
         ComponentName comp = new ComponentName("com.android.settings", "com.android.settings.Settings$AccessLockSummaryActivity");
         intent.setComponent(comp);
         context.startActivity(intent);
@@ -222,7 +222,7 @@ public class GoToSysConfigHelper {
     private  static void  goToSysConfigAppPermissions360(Context context){
         Intent intent = new Intent("android.intent.action.MAIN");
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra("packageName", AppTool.getPackageName(context));
+        intent.putExtra("packageName", AppTool.getPackageName());
         ComponentName comp = new ComponentName("com.qihoo360.mobilesafe", "com.qihoo360.mobilesafe.ui.index.AppEnterActivity");
         intent.setComponent(comp);
         context.startActivity(intent);

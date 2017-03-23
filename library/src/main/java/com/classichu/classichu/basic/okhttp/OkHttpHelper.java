@@ -96,7 +96,7 @@ public class OkHttpHelper {
         OkHttpSingleton.getInstance().doGet(webUrl, mDefaultHeadersMap, mCustomHeadersMap, mResponseCallback);
     }
     public void cancel() {
-        OkHttpSingleton.getInstance().();
+        //OkHttpSingleton.getInstance().();
     }
     public void doPostUrl(String webUrl) {
         //Log.d(TAG, "doPostUrl: url:" + webUrl);
