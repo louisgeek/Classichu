@@ -7,6 +7,8 @@ import android.support.v4.content.ContextCompat;
 
 import com.classichu.classichu.app.CLog;
 
+import java.lang.ref.WeakReference;
+
 
 /**
  * Created by louisgeek on 2017/1/6.
@@ -62,12 +64,11 @@ public class PermissionsHelper {
     /**
      * like Manifest.permission.CAMERA
      * ...
-     * @param fragmentActivity
      * @param permissions
      */
-    public static void checkPermissions(final FragmentActivity fragmentActivity, final String... permissions) {
+    public static void checkPermissions(final FragmentActivity fragmentAty, final String... permissions) {
         CLog.d("checkPermissions");
-
+        WeakReference<FragmentActivity> fragmentAtyWeakReference=new WeakReference<>(fragmentAty);
         boolean mIsAllGranted = true;
         //
         for (int i = 0; i < permissions.length; i++) {
@@ -76,17 +77,17 @@ public class PermissionsHelper {
              * 检测权限
              */
             //未授权
-            if (ContextCompat.checkSelfPermission(fragmentActivity, permission) != PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(fragmentAtyWeakReference.get(), permission) != PackageManager.PERMISSION_GRANTED) {
                 //有一个未授权  就false
                 mIsAllGranted = false;
                 //会回调OnRequestPermissionsResult
-                ActivityCompat.requestPermissions(fragmentActivity, new String[]{permission},REQUEST_CODE_PERMISSIONS);
+                ActivityCompat.requestPermissions(fragmentAtyWeakReference.get(), new String[]{permission},REQUEST_CODE_PERMISSIONS);
             }
         }
         //操作
         if (mIsAllGranted&&mDangerousPermissionOperation!=null){
 
-            mDangerousPermissionOperation.doDangerousOperation(fragmentActivity,permissions);
+            mDangerousPermissionOperation.doDangerousOperation(fragmentAtyWeakReference.get(),permissions);
         }
 
     }
@@ -127,8 +128,11 @@ public class PermissionsHelper {
         }
     }
 
-    public static void initDangerousPermissionOperation(DangerousPermissionOperation dangerousPermissionOperation) {
+    public static void registerDangerousPermissionOperation(DangerousPermissionOperation dangerousPermissionOperation) {
         mDangerousPermissionOperation = dangerousPermissionOperation;
+    }
+    public static void unRegisterDangerousPermissionOperation() {
+        mDangerousPermissionOperation = null;
     }
 
     private static DangerousPermissionOperation mDangerousPermissionOperation;
