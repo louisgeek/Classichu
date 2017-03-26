@@ -2,7 +2,6 @@ package com.classichu.classichu.basic.okhttp;
 
 
 import com.classichu.classichu.app.CLog;
-import com.classichu.classichu.basic.tool.MD5Tool;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,17 +23,17 @@ public class OkHttpHelper {
     private Callback mResponseCallback;
 
 
-    public final String UserId = "A6971118873561";
-    public final String UserPassword = UserId + "UZ" + "8C757B31-A896-F477-C46D-4E27E05528D3" + "UZ";
+  /*  public final String UserId = "";
+    public final String UserPassword = UserId + "UZ" + "" + "UZ";*/
 
     public Map<String, String> setupDefaultHeaders() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String time = sdf.format(new Date());
 
         Map<String, String> map = new HashMap<>();
-        map.put("UserId", UserId);
+       /* map.put("UserId", UserId);
         map.put("UserPassword", MD5Tool.encode(UserPassword + time));
-        map.put("CurrentTime", time);
+        map.put("CurrentTime", time);*/
         return map;
     }
 
@@ -46,8 +45,8 @@ public class OkHttpHelper {
         /**
          *默认headers
          */
-        mDefaultHeadersMap.put("userKey", "XXX");
-        mDefaultHeadersMap.put("userToken", "XXX");
+        mDefaultHeadersMap.put("userKey", "");
+        mDefaultHeadersMap.put("userToken", "");
         //云种验证
         mDefaultHeadersMap.putAll(setupDefaultHeaders());
         /**
@@ -95,9 +94,11 @@ public class OkHttpHelper {
         CLog.d("url:" + webUrl);
         OkHttpSingleton.getInstance().doGet(webUrl, mDefaultHeadersMap, mCustomHeadersMap, mResponseCallback);
     }
+
     public void cancel() {
         //OkHttpSingleton.getInstance().();
     }
+
     public void doPostUrl(String webUrl) {
         //Log.d(TAG, "doPostUrl: url:" + webUrl);
         CLog.d("url:" + webUrl);
