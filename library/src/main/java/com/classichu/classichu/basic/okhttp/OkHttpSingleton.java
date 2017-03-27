@@ -190,7 +190,7 @@ public class OkHttpSingleton {
         mOkHttpClient.newCall(request).enqueue(responseCallback);
     }
 
-    private void doPostString(String url, Map<String, String> defaultHeadersMap, Map<String, String> customHeadersMap, String strContent, Callback responseCallback) {
+    public void doPostString(String url, Map<String, String> defaultHeadersMap, Map<String, String> customHeadersMap, String strContent, Callback responseCallback) {
         //创建一个请求对象
         Request request;
         Request.Builder requestBuilder = new Request.Builder();
@@ -218,7 +218,7 @@ public class OkHttpSingleton {
         mOkHttpClient.newCall(request).enqueue(responseCallback);
     }
 
-    private void doPostJsonStr(String url, Map<String, String> defaultHeadersMap, Map<String, String> customHeadersMap, String jsonStr, Callback responseCallback) {
+    public void doPostJsonString(String url, Map<String, String> defaultHeadersMap, Map<String, String> customHeadersMap, String jsonStr, Callback responseCallback) {
         //创建一个请求对象
         Request request;
         Request.Builder requestBuilder = new Request.Builder();
