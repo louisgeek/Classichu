@@ -23,7 +23,7 @@ import java.util.concurrent.Semaphore;
 /**
  * Created by louisgeek on 2016/11/16.
  */
-
+@Deprecated
 public class KooImagesLoader {
     //双重检查 单例模式
     private static volatile KooImagesLoader instance;
