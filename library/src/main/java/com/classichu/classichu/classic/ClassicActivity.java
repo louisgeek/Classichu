@@ -145,6 +145,8 @@ public abstract class ClassicActivity extends AppCompatActivity {
      */
     protected abstract int setupLayoutResId();
 
+    protected abstract void setContentViewAfter();
+
     protected abstract void initView();
 
     protected abstract void initListener();
@@ -339,7 +341,7 @@ public abstract class ClassicActivity extends AppCompatActivity {
         } else {
             setContentView(layoutResID);
         }
-
+        setContentViewAfter();
     }
 
 

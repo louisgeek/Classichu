@@ -5,11 +5,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by louisgeek on 2016/03/16.
+ * Created by Classichu on 2017/5/24.
  */
 
 public class ReflectTool {
-
     /**
      * bean2Map  常用
      *
@@ -41,32 +40,65 @@ public class ReflectTool {
     }
 
     /**
-     * 反射获得对象的值  Exception在外面处理
+     * 反射获得对象的值
+     *
      * @param
      * @param fieldName
      * @return
      */
-    public static <T, E> T getFieldValue(E e, String fieldName) throws Exception {
-        Field field = e.getClass().getDeclaredField(fieldName);
-        field.setAccessible(true);
-        return (T) field.get(e);
+    public static <T, E> T getFieldValue(E eObj, String fieldName) {
+        try {
+            Field field = eObj.getClass().getDeclaredField(fieldName);
+            field.setAccessible(true);
+            return (T) field.get(eObj);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
-
-    public static int getImageViewField(Object object, String fieldName) {
-        int value = 0;
+    public static <E> void setFieldValue(E eObj, String fieldName, Object value) {
         try {
-            Field field = object.getClass().getDeclaredField(fieldName);
+            Field field = eObj.getClass().getDeclaredField(fieldName);
             field.setAccessible(true);
-
-            int fieldValue = field.getInt(object);
-            if (fieldValue > 0 && fieldValue < Integer.MAX_VALUE) {
-                value = fieldValue;
-            }
-        } catch (Exception e) {
+            field.set(eObj, value);
+        } catch (IllegalAccessException e) {
             e.printStackTrace();
-
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
         }
-        return value;
+    }
+    /**
+     * 反射获得对象的值
+     * 常用于  子类继承父类调用
+     * @param
+     * @param fieldName
+     * @return
+     */
+    public static <T> T getFieldValueFromSuperClass(Class tClass, Object obj, String fieldName) {
+        try {
+            Field field = tClass.getDeclaredField(fieldName);
+            field.setAccessible(true);
+            return (T) field.get(obj);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void setFieldValueForSuperClass(Class tClass, Object obj, String fieldName, Object value) {
+        try {
+            Field field = tClass.getDeclaredField(fieldName);
+            field.setAccessible(true);
+            field.set(obj, value);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 }
