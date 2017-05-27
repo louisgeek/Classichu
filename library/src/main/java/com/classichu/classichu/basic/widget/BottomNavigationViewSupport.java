@@ -5,6 +5,7 @@ import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.util.AttributeSet;
+import android.view.View;
 
 import com.classichu.classichu.basic.tool.ReflectTool;
 
@@ -34,21 +35,28 @@ public class BottomNavigationViewSupport extends BottomNavigationView {
     }
 
     /**
-     *  根据索引选中对应Item
-     *  推荐
+     * 根据索引选中对应Item
+     * 推荐
+     *
      * @param index
      */
     public void setChecked(int index) {
-        getMenu().getItem(index).setChecked(true);
+        if (index >= 0) {
+            getMenu().getItem(index).setChecked(true);
+        }
     }
 
     /**
      * 根据menu item id选中对应Item
      * 和 setChecked 功能一致
+     *
      * @param menu_item_id
      */
-    public void setClicked(int menu_item_id) {
-        findViewById(menu_item_id).performClick();
+    public void setClickedItem(int menu_item_id) {
+        View view = findViewById(menu_item_id);
+        if (view != null) {
+            view.performClick();
+        }
     }
 
     public void enableMenuViewShiftMode(boolean enable) {

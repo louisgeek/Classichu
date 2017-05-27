@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,21 +15,26 @@ import android.view.ViewGroup;
 import com.classichu.adapter.recyclerview.ClassicRVHeaderFooterAdapter;
 import com.classichu.classichu.R;
 import com.classichu.classichu.app.CLog;
+import com.classichu.classichu.basic.BasicFragment;
 import com.classichu.classichu.basic.data.FinalData;
 import com.classichu.classichu.basic.event.BasicEvent;
 import com.classichu.classichu.basic.listener.OnNotFastClickListener;
 import com.classichu.classichu.basic.listener.OnRecyclerViewTouchListener;
 import com.classichu.classichu.basic.tool.ViewTool;
+import com.fondesa.recyclerviewdivider.RecyclerViewDivider;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 /**
  * Created by louisgeek on 2016/10/31.
  */
 
-public abstract class ClassicFragment extends Fragment {
+public abstract class ClassicFragment extends BasicFragment {
     //
     protected static final String ARG_PARAM1 = "param1";
     protected static final String ARG_PARAM2 = "param2";
@@ -56,7 +60,7 @@ public abstract class ClassicFragment extends Fragment {
         super.onAttach(context);
         mContext = context;
     }
-
+    Unbinder mUnbinder;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -64,6 +68,8 @@ public abstract class ClassicFragment extends Fragment {
         mTag = this.getClass().getSimpleName();
 
         mRootLayout = inflater.inflate(setupLayoutResId(), container, false);
+        //
+        mUnbinder = ButterKnife.bind(this, mRootLayout);
         //
         EventBus.getDefault().register(this);
         //
@@ -81,7 +87,11 @@ public abstract class ClassicFragment extends Fragment {
         return mRootLayout;
         //return super.onCreateView(inflater, container, savedInstanceState);
     }
-
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mUnbinder.unbind();
+    }
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -228,8 +238,8 @@ public abstract class ClassicFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        //mRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(mContext).build());
-
+        //hideLastDivider
+        RecyclerViewDivider.with(mContext).hideLastDivider().build().addTo(mRecyclerView);
         /**
          *设置Adapter
          */

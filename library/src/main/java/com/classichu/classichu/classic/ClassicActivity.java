@@ -31,6 +31,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import butterknife.ButterKnife;
+
 public abstract class ClassicActivity extends AppCompatActivity {
     //开启vector
     static {
@@ -56,6 +58,7 @@ public abstract class ClassicActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
        /* setContentView(setupLayoutResId());*/
         initContentView(setupLayoutResId());
+        ButterKnife.bind(this);
 
         mTag = this.getClass().getSimpleName();
         mContext = this;
@@ -145,7 +148,6 @@ public abstract class ClassicActivity extends AppCompatActivity {
      */
     protected abstract int setupLayoutResId();
 
-    protected abstract void setContentViewAfter();
 
     protected abstract void initView();
 
@@ -341,7 +343,6 @@ public abstract class ClassicActivity extends AppCompatActivity {
         } else {
             setContentView(layoutResID);
         }
-        setContentViewAfter();
     }
 
 
