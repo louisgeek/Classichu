@@ -67,7 +67,7 @@ dependencies {
     //
     compile 'com.github.classichu:ClassicTitleBar:1.0.3'
     compile 'com.github.classichu:ClassicDialogView:1.0.9'
-    compile 'com.github.classichu:ClassicAdapter:1.1.0'
+    compile 'com.github.classichu:ClassicAdapter:1.1.2'
     compile 'com.github.classichu:ClassicPercentLayout:1.0.1'
     compile 'com.github.classichu:ClassicVectorTextView:1.0.3'
     testCompile 'junit:junit:4.12'

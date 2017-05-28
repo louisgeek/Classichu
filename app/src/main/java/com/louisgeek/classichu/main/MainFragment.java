@@ -88,8 +88,13 @@ public class MainFragment extends ClassicMvpFragment<MainPresenter> implements M
         if (mRecyclerView.getLayoutManager() instanceof GridLayoutManager){
             mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         }else {
-            mRecyclerView.setLayoutManager(new GridLayoutManager(mContext,2));
+         mRecyclerView.setLayoutManager(new GridLayoutManager(mContext,2));
+
+            //     mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
         }
+        //重新设置 让合并单元格的设置生效
+        mRecyclerView.setAdapter(mClassicRVHeaderFooterAdapter);
+      //  mClassicRVHeaderFooterAdapter.notifyDataSetChanged();
     }
 
     @Override
