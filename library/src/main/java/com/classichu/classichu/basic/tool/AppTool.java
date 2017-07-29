@@ -10,10 +10,13 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import java.util.List;
+
+import static android.os.Build.DEVICE;
 
 /**
  * Created by louisgeek on 2016/9/29.
@@ -30,33 +33,7 @@ public class AppTool {
         return imei;
     }
 
-    /**
-     * 获取设备的系统版本号
-     */
-    public static int getDeviceSDK() {
-        int sdk = android.os.Build.VERSION.SDK_INT;
-        return sdk;
-    }
 
-    /**
-     * 获取设备的型号
-     */
-    public static String getDeviceName() {
-        String model = android.os.Build.MODEL;
-        return model;
-    }
-    /**
-     * 获取设备的厂商
-     */
-    public static String getDeviceManufacturer() {
-        String Manufacturer = android.os.Build.MANUFACTURER;
-        String BOARD = android.os.Build.BOARD;
-        String DEVICE = android.os.Build.DEVICE;
-        Log.d("KKK", "getDeviceManufacturer: "+Manufacturer);
-        Log.d("KKK", "getDeviceManufacturer: "+BOARD);
-        Log.d("KKK", "getDeviceManufacturer: "+DEVICE);
-        return Manufacturer;
-    }
     /**
      * 获取自己应用程序的名称
      */

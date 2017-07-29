@@ -14,6 +14,7 @@ import com.classichu.classichu.app.CLog;
 
 /**
  * Created by louisgeek on 2017/3/17.
+ * 蒙版 FrameLayout
  */
 
 public class ClassicMaskFrameLayout extends FrameLayout {

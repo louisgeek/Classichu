@@ -12,6 +12,7 @@ import com.classichu.classichu.basic.tool.ReflectTool;
 
 /**
  * Created by Classichu on 2017/5/24.
+ * 可关闭ShiftingMode的BottomNavigationView
  */
 
 public class BottomNavigationViewSupport extends BottomNavigationView {

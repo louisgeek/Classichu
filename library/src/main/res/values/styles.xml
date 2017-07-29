@@ -12,39 +12,64 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/white</item>
+        <!--当Activity设置了android:windowIsTranslucent=true时，给Activity设置ActivityAnimation会不起作用，只能设置windowAnimation-->
+        <item name="android:windowAnimationStyle">@style/ClassicAnimation</item>
+        <!--<item name="android:windowAnimationStyle">@style/ClassicAnimationActivity</item>-->
     </style>
 
-   <!-- <style name="ClassicTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+    <!-- 窗口半透明 -->
+    <style name="ClassicTheme.Translucent">
+        <item name="android:windowIsTranslucent">true</item>
     </style>
--->
+    <!-- 窗口背景颜色透明 -->
+    <style name="ClassicTheme.TransparentBackground">
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+    <!-- 窗口半透明、窗口背景颜色透明 -->
+    <style name="ClassicTheme.Translucent.TransparentBackground">
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+    <!-- 防止 启动的第一个活动 白屏或黑屏  -->
+    <style name="ClassicTheme.Translucent.Splash">
+        <item name="android:windowDisablePreview">true</item>
+    </style>
+
+
     <!-- 全屏 -->
     <style name="ClassicTheme.Fullscreen">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
-    <!-- 窗口透明 -->
-    <style name="ClassicTheme.Transparent">
+
+    <!-- 全屏  窗口半透明 -->
+    <style name="ClassicTheme.Fullscreen.Translucent">
         <item name="android:windowIsTranslucent">true</item>
     </style>
-    <!-- 背景颜色也透明 -->
-    <style name="ClassicTheme.Transparent.TransparentBackground">
-         <item name="android:windowBackground">@android:color/transparent</item>
+
+    <style name="ClassicAnimation" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@android:anim/slide_in_left</item>
+        <item name="android:windowExitAnimation">@android:anim/slide_out_right</item>
     </style>
-    <!-- 防止 启动的第一个活动 白屏或黑屏  -->
-    <style name="ClassicTheme.Transparent.Splash">
-        <item name="android:windowDisablePreview">true</item>
+    <style name="ClassicAnimationActivity" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@android:anim/slide_in_left</item>
+        <item name="android:activityOpenExitAnimation">@android:anim/slide_out_right</item>
+        <item name="android:activityCloseEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:activityCloseExitAnimation">@android:anim/fade_out</item>
     </style>
-    <!-- 窗口透明 全屏 -->
-    <style name="ClassicTheme.Transparent.Fullscreen">
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-    </style>
+
     <!-- Toolbar -->
     <style name="ClassicToolbar">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="android:theme">@style/ClassicAppBarThemeOverlay</item>
+        <item name="popupTheme">@style/ClassicPopupThemeOverlay</item>
+    </style>
+    <style name="ClassicToolbar2">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">?attr/actionBarSize</item>
         <item name="android:background">?attr/colorPrimary</item>
         <item name="android:theme">@style/ClassicAppBarThemeOverlay</item>
         <item name="popupTheme">@style/ClassicPopupThemeOverlay</item>

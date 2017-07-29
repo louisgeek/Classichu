@@ -4,6 +4,9 @@ import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by louisgeek on 2017/2/20.
  * 经典Application
@@ -14,6 +17,12 @@ public class ClassicApplication extends Application {
     private static ClassicApplication mInstance;
     private static Context mAppContext;
     private static final String TAG = "ClassicApplication";
+    private Map<String,String> mHeadersMap=new HashMap<>();
+
+
+    public Map<String, String> getHeadersMap() {
+        return mHeadersMap;
+    }
 
     @Override
     public void onCreate() {
@@ -22,6 +31,8 @@ public class ClassicApplication extends Application {
         //
         mInstance = this;
         mAppContext = getApplicationContext();
+        //BGASwipeBack
+      //  ClassicBGASwipeBackHelper.initCallAtApplicationOnCreate(this);
     }
 
     public static boolean isDebug() {

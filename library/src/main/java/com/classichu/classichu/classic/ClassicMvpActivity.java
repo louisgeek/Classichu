@@ -6,7 +6,7 @@ import android.os.Bundle;
  * Created by louisgeek on 2017/2/22.
  */
 
-public abstract class ClassicMvpActivity<P extends ClassicPresenter>  extends ClassicActivity{
+public abstract class ClassicMvpActivity<P extends ClassicPresenter> extends ClassicActivity {
     protected P mPresenter;
 
     @Override
@@ -21,6 +21,8 @@ public abstract class ClassicMvpActivity<P extends ClassicPresenter>  extends Cl
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mPresenter.recycleViewAndModel();
+        if (mPresenter != null) {
+            mPresenter.destroy();
+        }
     }
 }

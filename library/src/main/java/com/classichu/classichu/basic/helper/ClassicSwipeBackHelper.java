@@ -11,7 +11,7 @@ import com.jude.swipbackhelper.SwipeListener;
 
 public class ClassicSwipeBackHelper {
 
-    public static void initCallAtOnCreated(Activity activity,boolean swipeBackEnable,SwipeListener swipeListener) {
+    public static void initCallAtOnCreated(Activity activity,boolean swipeBackEnable) {
         SwipeBackHelper.onCreate(activity);
         //
         int DEFAULT_SCRIM_COLOR = 0x99000000;
@@ -27,7 +27,22 @@ public class ClassicSwipeBackHelper {
                 .setSwipeRelateOffset(500)//activity联动时的偏移量。默认500px。
                 //##webview list 不能侧滑setDisallowInterceptTouchEvent(true)//不抢占事件，默认关（事件将先由子View处理再由滑动关闭处理）
                 .setDisallowInterceptTouchEvent(false)//不抢占事件，默认关（事件将先由子View处理再由滑动关闭处理）
-                .addListener(swipeListener);
+                .addListener(new SwipeListener() {
+                    @Override
+                    public void onScroll(float percent, int px) {
+
+                    }
+
+                    @Override
+                    public void onEdgeTouch() {
+
+                    }
+
+                    @Override
+                    public void onScrollToClose() {
+
+                    }
+                });
     }
     public static void configCallAtOnPostCreate(Activity activity) {
         SwipeBackHelper.onPostCreate(activity);

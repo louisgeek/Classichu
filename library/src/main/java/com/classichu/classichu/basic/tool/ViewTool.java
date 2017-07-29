@@ -1,7 +1,9 @@
 package com.classichu.classichu.basic.tool;
 
+import android.content.Context;
 import android.os.Build;
 import android.support.v4.view.ViewCompat;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
@@ -24,13 +26,23 @@ public class ViewTool {
         return !ViewCompat.canScrollHorizontally(view, 1);//右侧是否可以滚动
     }
 
-
+    private static int actionBarSize = -1;
+    public static int getActionBarSize(Context context) {
+        if (actionBarSize < 0) {
+            TypedValue value = new TypedValue();
+            context.getTheme().resolveAttribute(android.R.attr.actionBarSize, value, true);
+            actionBarSize = TypedValue.complexToDimensionPixelSize(value.data, context
+                    .getResources().getDisplayMetrics());
+        }
+        return actionBarSize;
+    }
     /**
      * ==================================================================
      */
 
 
     /**
+     * //举例：文字如果换行就不准了
      * @param v
      * @return
      */
@@ -53,7 +65,7 @@ public class ViewTool {
         System.out.println("measure height=" + height);
         return height;
     }
-    public static void getViewRealWidth(final View view, final BackWidthAndHeightCallBack backWidthAndHeightCallBack){
+    public static void getViewRealWidth4(final View view, final BackWidthAndHeightCallBack backWidthAndHeightCallBack){
         view.getViewTreeObserver().addOnPreDrawListener(
                 new ViewTreeObserver.OnPreDrawListener() {
                     @Override
@@ -114,7 +126,7 @@ public class ViewTool {
                 });
     }
 
-    public static void getViewRealWidth4(final View view, final BackWidthAndHeightCallBack backWidthAndHeightCallBack){
+    public static void getViewRealWidth(final View view, final BackWidthAndHeightCallBack backWidthAndHeightCallBack){
         view.post(new Runnable() {
 
             @Override

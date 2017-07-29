@@ -44,7 +44,7 @@
 
     <!--classic-->
     <color name="classicGray">#b3bcbcbc</color>
-    <color name="classicGrayLight">#b3F6F6F6</color>
+    <color name="classicGrayLight">#b3f6f6f6</color>
     <color name="classicWhite">#ffffffff</color>
     <color name="classicBlack">#212121</color>
 
@@ -60,7 +60,9 @@
     <color name="classicButtonGrayBg">@color/classicGray</color>
     <!-- -->
     <color name="classicEditItemGrayBg">@color/classicGrayLight</color>
-    <color name="classicEditItemBorderColor">@color/colorPrimary</color>
+    <color name="classicEditItemBorderColor">@color/list_grid_line</color>
+    <color name="classicEditItemFocusBorderColor">@color/colorPrimary</color>
+    <color name="classicEditItemErrorBorderColor">#FFFF6E6E</color>
     <!-- -->
     <color name="classicGridItemBg">@color/classicViewBg</color>
     <color name="classicGridItemSelectedBg">#f0f6f1f1</color>
@@ -82,6 +84,20 @@
     <color name="toastSolidBg">@color/white</color>
     <color name="toastStrokeGrayBg">@color/classicGray</color>
 
+    <color name="click_black">#22000000</color>
+    <color name="click_white">#22FFFFFF</color>
+
+    <color name="text_white_first">#DDFFFFFF</color>
+    <color name="text_white_second">#89FFFFFF</color>
+    <color name="text_white_third">#42FFFFFF</color>
+    <color name="text_black_first">#DD000000</color>
+    <color name="text_black_second">#89000000</color>
+    <color name="text_black_third">#42000000</color>
+
+    <color name="line">#22000000</color>
+    <color name="lineDark">#42000000</color>
+
+    <color name="list_grid_line">#CFCFCF</color>
 
 
 

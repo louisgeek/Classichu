@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.louisgeek.classichu.setting.SettingActivity">
+
+    <com.classichu.classichu.basic.widget.ClassicInputLayout
+        android:id="@+id/id_cil_java_ip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/classic_item_comm_margin"
+        android:layout_marginRight="@dimen/classic_item_comm_margin"
+        android:layout_marginTop="@dimen/classic_item_comm_margin"
+        android:background="@drawable/selector_classic_edit_item_bg"
+        app:classic_edit_hint="java ip" />
+
+
+    <com.classichu.classichu.basic.widget.ClassicInputLayout
+        android:id="@+id/id_cil_java_port"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/classic_item_comm_margin"
+        android:layout_marginRight="@dimen/classic_item_comm_margin"
+        android:layout_marginTop="@dimen/classic_item_comm_margin"
+        android:background="@drawable/selector_classic_edit_item_bg"
+        app:classic_edit_hint="java port" />
+
+
+
+
+</LinearLayout>

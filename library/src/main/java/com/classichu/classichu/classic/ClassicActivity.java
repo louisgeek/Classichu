@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
@@ -19,19 +18,18 @@ import android.view.ViewGroup;
 import com.classichu.classichu.R;
 import com.classichu.classichu.app.CLog;
 import com.classichu.classichu.basic.data.FinalData;
-import com.classichu.classichu.basic.event.BasicEvent;
-import com.classichu.classichu.basic.helper.ClassicSwipeBackHelper;
+import com.classichu.classichu.basic.eventbus.BasicEvent;
+import com.classichu.classichu.basic.eventbus.factory.EventBusFactory;
 import com.classichu.classichu.basic.helper.PermissionsHelper;
-import com.classichu.classichu.basic.helper.StatusBarHelper;
 import com.classichu.classichu.basic.listener.OnNotFastClickListener;
+import com.classichu.classichu.basic.listener.OnViewClickEnabledListener;
 import com.classichu.titlebar.widget.ClassicTitleBar;
-import com.jude.swipbackhelper.SwipeListener;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public abstract class ClassicActivity extends AppCompatActivity {
     //开启vector
@@ -49,16 +47,19 @@ public abstract class ClassicActivity extends AppCompatActivity {
     protected Activity mActivity;
     protected Toolbar mToolbar;
     protected ClassicTitleBar mClassicTitleBar;
+    private Unbinder mUnBinder;
 
     /**
      * ===================================protected lifecycle=============================
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //BGASwipeBack
+       // ClassicBGASwipeBackHelper.configCallAtOnCreateBeforeSuper(this);
         super.onCreate(savedInstanceState);
        /* setContentView(setupLayoutResId());*/
         initContentView(setupLayoutResId());
-        ButterKnife.bind(this);
+        mUnBinder = ButterKnife.bind(this);
 
         mTag = this.getClass().getSimpleName();
         mContext = this;
@@ -66,27 +67,28 @@ public abstract class ClassicActivity extends AppCompatActivity {
         CLog.d("onCreate");
 
         /**
-         * SwipeBack
+         * 侧滑返回
          */
-        ClassicSwipeBackHelper.initCallAtOnCreated(this, configSwipeBackEnable(), mSwipeListener);
+       // ClassicSwipeBackHelper.initCallAtOnCreated(this, configSwipeBackEnable());
+
         /**
          * StatusBar
          */
-        if (configStatusBarColorEnable()) {
+       /* if (configStatusBarColorEnable()) {
             if (configSwipeBackEnable()) {
                 StatusBarHelper.setColorForSwipeBack(this, configStatusBarColorEnable(), configStatusBarColorResId());
             } else {
-                 StatusBarHelper.setColor(this, configStatusBarColorEnable(), configStatusBarColorResId());
+                StatusBarHelper.setColor(this, configStatusBarColorEnable(), configStatusBarColorResId());
             }
             //修正StatusBarHelper造成的背景色改变
             getContentViewRootLayout().setBackgroundColor(ContextCompat.getColor(this, R.color.windowBackground));
-        }
+        }*/
 
 
         /**
          * 消息
          */
-        EventBus.getDefault().register(this);
+        EventBusFactory.getEventBusManager().register(this);
         /**
          * last
          */
@@ -100,7 +102,7 @@ public abstract class ClassicActivity extends AppCompatActivity {
         /**
          * 侧滑返回
          */
-        ClassicSwipeBackHelper.configCallAtOnPostCreate(this);
+       // ClassicSwipeBackHelper.configCallAtOnPostCreate(this);
     }
 
     @Override
@@ -109,11 +111,15 @@ public abstract class ClassicActivity extends AppCompatActivity {
         /**
          * 侧滑返回
          */
-        ClassicSwipeBackHelper.configCallAtOnDestroy(this);
+        //ClassicSwipeBackHelper.configCallAtOnDestroy(this);
         /**
          * 消息
          */
-        EventBus.getDefault().unregister(this);
+        EventBusFactory.getEventBusManager().unregister(this);
+
+        if (mUnBinder != null) {
+            mUnBinder.unbind();
+        }
     }
 
     @Override
@@ -170,7 +176,7 @@ public abstract class ClassicActivity extends AppCompatActivity {
      *
      */
     protected boolean configStatusBarColorEnable() {
-        return true;
+        return false;
     }
 
     protected int configStatusBarColorResId() {
@@ -222,7 +228,7 @@ public abstract class ClassicActivity extends AppCompatActivity {
         String bundleExtra = null;
         Bundle bundle = getBundleExtra();
         if (bundle != null) {
-            bundleExtra = bundle.getString(FinalData.BUNDLE_EXTRA_KEY_1, "");
+            bundleExtra = bundle.getString(FinalData.BundleExtra.KEY_1, "");
         }
         return bundleExtra;
     }
@@ -231,7 +237,7 @@ public abstract class ClassicActivity extends AppCompatActivity {
         int bundleExtra = 0;
         Bundle bundle = getBundleExtra();
         if (bundle != null) {
-            bundleExtra = bundle.getInt(FinalData.BUNDLE_EXTRA_KEY_1);
+            bundleExtra = bundle.getInt(FinalData.BundleExtra.KEY_1);
         }
         return bundleExtra;
     }
@@ -246,13 +252,13 @@ public abstract class ClassicActivity extends AppCompatActivity {
 
     protected Bundle createBundleExtraInt1(int value1) {
         Bundle bundle = new Bundle();
-        bundle.putInt(FinalData.BUNDLE_EXTRA_KEY_1, value1);
+        bundle.putInt(FinalData.BundleExtra.KEY_1, value1);
         return bundle;
     }
 
     protected Bundle createBundleExtraStr1(String value1) {
         Bundle bundle = new Bundle();
-        bundle.putString(FinalData.BUNDLE_EXTRA_KEY_1, value1);
+        bundle.putString(FinalData.BundleExtra.KEY_1, value1);
         return bundle;
     }
 
@@ -280,9 +286,20 @@ public abstract class ClassicActivity extends AppCompatActivity {
      * @param view
      * @param onNotFastClickListener
      */
-    protected void setOnNotFastClickListener(final View view, final OnNotFastClickListener onNotFastClickListener) {
+    protected void setOnNotFastClickListener(View view, final OnNotFastClickListener onNotFastClickListener) {
         if (view != null) {
             view.setOnClickListener(onNotFastClickListener);
+        }
+    }
+    /**
+     * 点击变灰定时恢复，变相防止重复点击的监听
+     *
+     * @param view
+     * @param onViewClickEnabledListener
+     */
+    protected void setOnViewClickEnabledListener(View view, final OnViewClickEnabledListener onViewClickEnabledListener) {
+        if (view != null) {
+            view.setOnClickListener(onViewClickEnabledListener);
         }
     }
 
@@ -401,24 +418,5 @@ public abstract class ClassicActivity extends AppCompatActivity {
         id_vs_content.inflate();
     }
 
-    /**
-     * 侧滑监听
-     */
-    private SwipeListener mSwipeListener = new SwipeListener() {
-        @Override
-        public void onScroll(float percent, int px) {
-
-        }
-
-        @Override
-        public void onEdgeTouch() {
-
-        }
-
-        @Override
-        public void onScrollToClose() {
-
-        }
-    };
 
 }

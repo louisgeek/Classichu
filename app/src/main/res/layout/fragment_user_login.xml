@@ -1,0 +1,41 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.louisgeek.classichu.login.UserLoginFragment">
+
+    <com.classichu.classichu.basic.widget.ClassicInputLayout
+        android:id="@+id/id_cil_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/classic_item_comm_margin"
+        android:layout_marginRight="@dimen/classic_item_comm_margin"
+        android:layout_marginTop="@dimen/classic_item_comm_margin"
+        android:background="@drawable/selector_classic_edit_item_bg"
+        app:classic_edit_hint="@string/login_username_hint" />
+
+    <com.classichu.classichu.basic.widget.ClassicInputLayout
+        android:id="@+id/id_cil_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/classic_item_comm_margin"
+        android:layout_marginRight="@dimen/classic_item_comm_margin"
+        android:layout_marginTop="@dimen/classic_item_comm_margin"
+        android:background="@drawable/selector_classic_edit_item_bg"
+        app:classic_edit_hint="@string/login_password_hint"
+        app:classic_is_password="true"
+        app:classic_password_btn_enable="true" />
+
+    <Button
+        android:id="@+id/id_btn_login"
+        style="@style/ClassicButtonRound"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/classic_item_comm_padding"
+        android:layout_marginRight="@dimen/classic_item_comm_padding"
+        android:layout_marginTop="@dimen/classic_item_comm_margin"
+        android:text="@string/classic_app_login" />
+
+</LinearLayout>

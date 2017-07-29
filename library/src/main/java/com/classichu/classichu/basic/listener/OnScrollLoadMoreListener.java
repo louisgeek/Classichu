@@ -18,6 +18,11 @@ public abstract class OnScrollLoadMoreListener extends RecyclerView.OnScrollList
      * 判断是否到达底部
      * 2016-11-3 16:24:00
      * item 很少的时候  有点问题
+     *
+     * 可以通过判断数据回调设置后判断是否显示底部来动态继续加载
+     *    if (!recycle.canScrollVertically(View.SCROLL_INDICATOR_BOTTOM)) {
+     *          loadMoreDate();
+     *     }
      */
     @Deprecated
     public static boolean isReachedBottom(RecyclerView recyclerView) {
@@ -37,7 +42,21 @@ public abstract class OnScrollLoadMoreListener extends RecyclerView.OnScrollList
             return false;
         }
     }
+    @Deprecated //待验证
+    public static boolean isReachedBottom(RecyclerView recyclerView,int dy) {
+        LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+        if (dy > 0) //向下滚动
+        {
+            int visibleItemCount = layoutManager.getChildCount();
+            int totalItemCount = layoutManager.getItemCount();
+            int lastVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
 
+            if ((visibleItemCount + lastVisibleItemPosition) >= totalItemCount) {
+                return true;
+            }
+        }
+        return  false;
+    }
 
     /**
      * 当屏幕中的 item 数量多到超出屏幕的时候，这时候的滚动是会触发 onScrolled(RecyclerView recyclerView, int dx, int dy) 方法的。

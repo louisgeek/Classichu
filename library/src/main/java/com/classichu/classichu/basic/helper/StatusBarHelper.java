@@ -2,6 +2,7 @@ package com.classichu.classichu.basic.helper;
 
 import android.app.Activity;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.DrawerLayout;
 
 import com.classichu.classichu.R;
 import com.jaeger.library.StatusBarUtil;
@@ -40,4 +41,19 @@ public class StatusBarHelper {
             StatusBarUtil.setColorForSwipeBack(activity,statusBarColor,statusBarAlpha);
         }
     }
-}
+    public static void setColorForDrawerLayout(Activity activity, DrawerLayout drawerLayout,
+                                               boolean statusBarColorEnable, int statusBarColorResId) {
+    setColorForDrawerLayout(activity,drawerLayout,statusBarColorEnable,statusBarColorResId,0);
+    }
+        public static void setColorForDrawerLayout(Activity activity, DrawerLayout drawerLayout,
+                                               boolean statusBarColorEnable, int statusBarColorResId,int statusBarAlpha) {
+        if (statusBarColorEnable){
+            if (statusBarColorResId == 0) { //0 默认
+                statusBarColorResId = R.color.colorPrimary;
+            }
+            //
+            int statusBarColor = ContextCompat.getColor(activity, statusBarColorResId);
+            StatusBarUtil.setColorForDrawerLayout(activity,drawerLayout,statusBarColor,statusBarAlpha);
+        }
+    }
+   }

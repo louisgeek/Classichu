@@ -16,7 +16,8 @@ import com.louisgeek.classichu.R;
 import com.louisgeek.classichu.logic.douban.BookSearchBean;
 import com.louisgeek.classichu.main.adapter.MainAdapter;
 import com.louisgeek.classichu.main.contract.MainContract;
-import com.louisgeek.classichu.main.presenter.MainPresenter;
+import com.louisgeek.classichu.main.presenter.MainPresenterImpl;
+import com.louisgeek.classichu.patient.PatientActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +28,8 @@ import java.util.List;
  * Use the {@link MainFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MainFragment extends ClassicMvpFragment<MainPresenter> implements MainContract.View<BookSearchBean>{
-
+public class MainFragment extends ClassicMvpFragment<MainPresenterImpl>
+        implements MainContract.View<BookSearchBean> {
 
 
     public MainFragment() {
@@ -72,7 +73,7 @@ public class MainFragment extends ClassicMvpFragment<MainPresenter> implements M
 
     @Override
     protected void initView(View rootLayout) {
-            toRefreshData();
+        toRefreshData();
     }
 
     @Override
@@ -82,19 +83,22 @@ public class MainFragment extends ClassicMvpFragment<MainPresenter> implements M
 
 
     private void switchGridOrList() {
-        if (mRecyclerView==null){
+        if (mRecyclerView == null) {
             return;
         }
-        if (mRecyclerView.getLayoutManager() instanceof GridLayoutManager){
+        if (mRecyclerView.getLayoutManager() instanceof GridLayoutManager) {
             mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        }else {
-         mRecyclerView.setLayoutManager(new GridLayoutManager(mContext,2));
-
-            //     mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+        }/*  else if(mRecyclerView.getLayoutManager() instanceof LinearLayoutManager) {
+            mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+        }*/else {
+            mRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
+            //让合并单元格的设置生效
+            mClassicRVHeaderFooterAdapter.callAfterChangeGridLayoutManager(mRecyclerView);
         }
-        //重新设置 让合并单元格的设置生效
-        mRecyclerView.setAdapter(mClassicRVHeaderFooterAdapter);
-      //  mClassicRVHeaderFooterAdapter.notifyDataSetChanged();
+       // mClassicRVHeaderFooterAdapter.notifyItemChanged(mClassicRVHeaderFooterAdapter.getItemCount()-1);
+        //重新设置 让合并单元格的设置生效 (此方式很卡)
+        //  mRecyclerView.setAdapter(mClassicRVHeaderFooterAdapter);
+        //  mClassicRVHeaderFooterAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -104,13 +108,15 @@ public class MainFragment extends ClassicMvpFragment<MainPresenter> implements M
 
     @Override
     public void hideProgress() {
-hideSwipeRefreshLayout();
+        hideSwipeRefreshLayout();
     }
 
     @Override
     public void showMessage(String msg) {
-ToastTool.showShort(msg);
+        ToastTool.showShort(msg);
     }
+
+
 
     @Override
     public void setupData(BookSearchBean data) {
@@ -120,7 +126,7 @@ ToastTool.showShort(msg);
 
     @Override
     public void setupMoreData(BookSearchBean data) {
-        List<BookSearchBean.BooksBean> books= data.getBooks();
+        List<BookSearchBean.BooksBean> books = data.getBooks();
         mClassicRVHeaderFooterAdapter.addDataListAtEnd(books);
         if (books.size() == 0) {
             //所有数据加载完毕
@@ -131,27 +137,29 @@ ToastTool.showShort(msg);
             mClassicRVHeaderFooterAdapter.showFooterViewNormal();
         }
     }
+
     @Override
     protected void toRefreshData() {
         super.toRefreshData();
-        mPresenter.gainCountData(mClassicRVHeaderFooterAdapter.getNowPageCount());
+        startAty(PatientActivity.class);
+        //mPresenter.gainCountData(mClassicRVHeaderFooterAdapter.getNowPageCount());
     }
 
     @Override
     protected void toLoadMoreData() {
         super.toLoadMoreData();
-        mPresenter.gainMoreData(mClassicRVHeaderFooterAdapter.getNextPageNum());
+       // mPresenter.gainMoreData(mClassicRVHeaderFooterAdapter.getNextPageNum());
     }
 
 
     @Override
-    protected MainPresenter setupPresenter() {
-        return new MainPresenter(this);
+    protected MainPresenterImpl setupPresenter() {
+        return new MainPresenterImpl(this);
     }
 
     @Override
     protected int configRecyclerViewResId() {
-        return R.id.id_recyclerview;
+        return R.id.id_recycler_view;
     }
 
     @Override
@@ -190,11 +198,12 @@ ToastTool.showShort(msg);
             @Override
             public void onItemClick(View itemView, int position) {
                 super.onItemClick(itemView, position);
-              ToastTool.showShortCenter("sda" + position);
+               // ToastTool.showShortCenter("sda" + position);
              /*   TaiZhangBean.ListBean listBean= (TaiZhangBean.ListBean) mClassicRVHeaderFooterAdapter.getData(position);
                 Bundle bundle=createBundleExtraStr1(listBean.getPrimary_id());
                 bundle.putString("TaiZhangName",listBean.getName());
                 startAty(YZTZActivity.class,bundle );*/
+             startAty(PatientActivity.class);
             }
         });
         mRecyclerView.setVisibility(View.GONE);//初始化 不显示
@@ -204,4 +213,5 @@ ToastTool.showShort(msg);
     public void callAtAty_RightBtnClick() {
         switchGridOrList();
     }
+
 }

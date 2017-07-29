@@ -10,7 +10,7 @@ import android.view.ViewGroup;
  * Created by louisgeek on 2017/2/22.
  */
 
-public abstract class ClassicMvpFragment<P extends ClassicPresenter>  extends ClassicFragment{
+public abstract class ClassicMvpFragment<P extends ClassicPresenter> extends ClassicFragment {
     protected P mPresenter;
 
     @Nullable
@@ -24,7 +24,9 @@ public abstract class ClassicMvpFragment<P extends ClassicPresenter>  extends Cl
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mPresenter.recycleViewAndModel();
+        if (mPresenter != null) {
+            mPresenter.destroy();
+        }
     }
 
     protected abstract P setupPresenter();

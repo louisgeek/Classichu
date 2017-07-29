@@ -6,15 +6,14 @@ package com.classichu.classichu.basic;
 
 public interface BasicContract {
 
-    interface View<D> extends BasicView<D> {
+    interface View<D> extends BasicView {
+        void setupData(D d);
+        void setupMoreData(D d);
     }
 
     interface Presenter extends BasicPresenter {
+        void gainCountData(int pageCount);
+        void gainMoreData(int pageNum);
     }
-
-    interface Model<D> extends BasicModel<D> {
-
-    }
-
 
 }

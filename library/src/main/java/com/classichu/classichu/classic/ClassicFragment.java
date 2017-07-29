@@ -1,5 +1,6 @@
 package com.classichu.classichu.classic;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,13 +18,14 @@ import com.classichu.classichu.R;
 import com.classichu.classichu.app.CLog;
 import com.classichu.classichu.basic.BasicFragment;
 import com.classichu.classichu.basic.data.FinalData;
-import com.classichu.classichu.basic.event.BasicEvent;
+import com.classichu.classichu.basic.eventbus.BasicEvent;
+import com.classichu.classichu.basic.eventbus.factory.EventBusFactory;
 import com.classichu.classichu.basic.listener.OnNotFastClickListener;
 import com.classichu.classichu.basic.listener.OnRecyclerViewTouchListener;
+import com.classichu.classichu.basic.listener.OnViewClickEnabledListener;
 import com.classichu.classichu.basic.tool.ViewTool;
 import com.fondesa.recyclerviewdivider.RecyclerViewDivider;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -45,6 +47,7 @@ public abstract class ClassicFragment extends BasicFragment {
     protected int mParam3;
 
     protected static String mTag;
+    protected Activity mActivity;
     protected Context mContext;
     protected View mRootLayout;
 
@@ -58,9 +61,12 @@ public abstract class ClassicFragment extends BasicFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        mActivity = (Activity) context;
         mContext = context;
     }
-    Unbinder mUnbinder;
+
+    private Unbinder mUnbinder;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -71,7 +77,7 @@ public abstract class ClassicFragment extends BasicFragment {
         //
         mUnbinder = ButterKnife.bind(this, mRootLayout);
         //
-        EventBus.getDefault().register(this);
+        EventBusFactory.getEventBusManager().register(this);
         //
         initRecyclerViewAndAdapter();
         //
@@ -83,19 +89,22 @@ public abstract class ClassicFragment extends BasicFragment {
         initView(mRootLayout);
         initListener();
 
-
         return mRootLayout;
         //return super.onCreateView(inflater, container, savedInstanceState);
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mUnbinder.unbind();
+        if (mUnbinder != null) {
+            mUnbinder.unbind();
+        }
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
+        EventBusFactory.getEventBusManager().unregister(this);
     }
 
     /**
@@ -180,13 +189,13 @@ public abstract class ClassicFragment extends BasicFragment {
 
     protected Bundle createBundleExtraInt1(int value1) {
         Bundle bundle = new Bundle();
-        bundle.putInt(FinalData.BUNDLE_EXTRA_KEY_1, value1);
+        bundle.putInt(FinalData.BundleExtra.KEY_1, value1);
         return bundle;
     }
 
     protected Bundle createBundleExtraStr1(String value1) {
         Bundle bundle = new Bundle();
-        bundle.putString(FinalData.BUNDLE_EXTRA_KEY_1, value1);
+        bundle.putString(FinalData.BundleExtra.KEY_1, value1);
         return bundle;
     }
 
@@ -202,7 +211,17 @@ public abstract class ClassicFragment extends BasicFragment {
             view.setOnClickListener(onNotFastClickListener);
         }
     }
-
+    /**
+     * 点击变灰定时恢复，变相防止重复点击的监听
+     *
+     * @param view
+     * @param onViewClickEnabledListener
+     */
+    protected void setOnViewClickEnabledListener(View view, final OnViewClickEnabledListener onViewClickEnabledListener) {
+        if (view != null) {
+            view.setOnClickListener(onViewClickEnabledListener);
+        }
+    }
     /**
      * =====================================private===========================
      */
@@ -234,16 +253,17 @@ public abstract class ClassicFragment extends BasicFragment {
         if (configClassicRVHeaderFooterAdapter() == null) {
             return;
         }
+        /**
+         *设置Adapter
+         */
+        mClassicRVHeaderFooterAdapter = configClassicRVHeaderFooterAdapter();
         //config
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         //hideLastDivider
         RecyclerViewDivider.with(mContext).hideLastDivider().build().addTo(mRecyclerView);
-        /**
-         *设置Adapter
-         */
-        mClassicRVHeaderFooterAdapter = configClassicRVHeaderFooterAdapter();
+
         /**
          *RecyclerView设置Adapter
          */

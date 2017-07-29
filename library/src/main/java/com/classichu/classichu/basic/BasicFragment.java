@@ -8,10 +8,17 @@ import android.support.v4.app.FragmentTransaction;
 /**
  * Created by Classichu on 2017/5/27.
  * <p>
- * // 根Fragment 一定要在save为null时才加载，Fragment中onCreateView等生命周里加载根子Fragment同理
+ * // Activity 加载根Fragment 一定要在savedInstanceState为null时才加载，
+ * Fragment中onCreateView等生命周里加载根子Fragment同理
  * // 因为在页面重启时，Fragment会被保存恢复，而此时再加载Fragment会重复加载，导致重叠
+ * <p>
+ * Activity中
  * if(saveInstanceState == null){
- * // 正常情况下去 加载根Fragment
+ * // 正常情况下去 加载 根Fragment
+ * }
+ * Fragment中
+ * if(saveInstanceState == null){
+ * // 正常情况下去 加载  根子Fragment
  * }
  */
 

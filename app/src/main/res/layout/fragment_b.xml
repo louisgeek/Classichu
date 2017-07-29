@@ -4,8 +4,9 @@
     android:layout_height="match_parent"
     tools:context="com.louisgeek.classichu.BFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <!-- fixme: Update blank fragment layout -->
     <TextView
+        android:id="@+id/id_tv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="@string/hello_blank_fragment" />

@@ -10,7 +10,7 @@ public abstract class OnDoubleClickListener implements View.OnClickListener {
     private int count = 0;
     private long firClick = 0;
     private long secClick = 0;
-
+    private static final long CLICK_DELAY = 300;
     @Override
     public void onClick(View v) {
         count++;
@@ -19,7 +19,7 @@ public abstract class OnDoubleClickListener implements View.OnClickListener {
 
         } else if (count == 2) {
             secClick = System.currentTimeMillis();
-            if (secClick - firClick < 1000) {
+            if (secClick - firClick < CLICK_DELAY) {
                 //双击事件
                 onDoubleClick(v);
             }

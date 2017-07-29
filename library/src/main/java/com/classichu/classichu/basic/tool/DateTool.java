@@ -80,7 +80,7 @@ public class DateTool {
      * @return
      */
     public static String getChinaDateTimeFromCalendar(int year, int monthOfYear, int dayOfMonth) {
-        SimpleDateFormat sdf = new SimpleDateFormat(FORMAT_DATE_TIME, Locale.CHINA);//Locale.SIMPLIFIED_CHINESE和Locale.CHINA一样
+        SimpleDateFormat sdf = new SimpleDateFormat(FORMAT_DATE_TIME, Locale.CHINA);
         //new Data(int,int,int)过时了
         GregorianCalendar calendar = new GregorianCalendar(year, monthOfYear, dayOfMonth);//初始具有指定年月日的公历类对象。
         Long timeInMillis = calendar.getTimeInMillis();
@@ -103,7 +103,7 @@ public class DateTool {
 
     public static Date parseStr2Date(String dateStr, String formatStr) {
         Date date = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat(formatStr, Locale.CHINA);//Locale.SIMPLIFIED_CHINESE和Locale.CHINA一样
+        SimpleDateFormat sdf = new SimpleDateFormat(formatStr, Locale.CHINA);
         try {
             date = sdf.parse(dateStr);
         } catch (ParseException e) {
@@ -113,7 +113,7 @@ public class DateTool {
     }
 
     public static String parseDate2Str(Date date, String formatStr) {
-        SimpleDateFormat sdf = new SimpleDateFormat(formatStr, Locale.CHINA);//Locale.SIMPLIFIED_CHINESE和Locale.CHINA一样
+        SimpleDateFormat sdf = new SimpleDateFormat(formatStr, Locale.CHINA);
         return sdf.format(date);
     }
 

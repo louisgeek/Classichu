@@ -7,8 +7,7 @@ import com.classichu.classichu.basic.BasicContract;
  */
 
 public interface MainContract {
-    interface Model<D> extends BasicContract.Model<D>{
-    }
+
 
     interface View<D> extends BasicContract.View<D>{
     }

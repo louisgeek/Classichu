@@ -11,7 +11,7 @@ import java.util.Calendar;
 
 public abstract class OnNotFastClickListener implements View.OnClickListener {
 
-    private static final int MIN_FAST_CLICK_DELAY = 1000;
+    private static final int MIN_FAST_CLICK_DELAY = 300;
     private long mLastClickTime;
 
     @Override

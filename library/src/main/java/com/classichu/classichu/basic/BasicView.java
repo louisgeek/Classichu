@@ -4,14 +4,11 @@ package com.classichu.classichu.basic;
  * Created by louisgeek on 2016/12/4.
  */
 
-public interface BasicView<D> {
+public interface BasicView {
     void showProgress();
 
     void hideProgress();
 
     void showMessage(String msg);
 
-    void setupData(D data);
-
-    void setupMoreData(D data);
 }

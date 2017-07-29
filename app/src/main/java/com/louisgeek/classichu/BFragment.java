@@ -1,11 +1,19 @@
 package com.louisgeek.classichu;
 
 
+import android.Manifest;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
+import android.widget.TextView;
 
+import com.classichu.classichu.basic.listener.OnViewClickEnabledListener;
 import com.classichu.classichu.classic.ClassicFragment;
+import com.tbruyelle.rxpermissions2.Permission;
+import com.tbruyelle.rxpermissions2.RxPermissions;
+
+import butterknife.BindView;
+import io.reactivex.functions.Consumer;
 
 
 /**
@@ -13,8 +21,11 @@ import com.classichu.classichu.classic.ClassicFragment;
  * Use the {@link BFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+@Deprecated
 public class BFragment extends ClassicFragment {
 
+    @BindView(R.id.id_tv)
+    TextView id_tv;
     public BFragment() {
         // Required empty public constructor
     }
@@ -55,6 +66,56 @@ public class BFragment extends ClassicFragment {
 
     @Override
     protected void initView(View rootLayout) {
+        setOnViewClickEnabledListener(id_tv, new OnViewClickEnabledListener() {
+            @Override
+            protected void onViewClick(View view) {
+                RxPermissions rxPermissions=new RxPermissions(mActivity);
+                rxPermissions.request(Manifest.permission.CAMERA)
+                        .subscribe(new Consumer<Boolean>() {
+                            @Override
+                            public void accept(Boolean aBoolean) throws Exception {
+                                if (aBoolean) {
+                                    // 获取权限
+                                } else {
+                                    //  未获取权限
+                                }
+                            }
+                        });
+                rxPermissions.request(Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO)
+                        .subscribe(new Consumer<Boolean>() {
+                            @Override
+                            public void accept(Boolean aBoolean) throws Exception {
+                                if (aBoolean) {
+                                    // 获取了所有权限
+                                } else {
+                                    //  未获取所有权限
+                                }
+                            }
+                        });
+                rxPermissions.requestEach(Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO)
+                        .subscribe(new Consumer<Permission>() {
+                            @Override
+                            public void accept(Permission permission) throws Exception {
+                                if (permission.name.equals(Manifest.permission.CAMERA)) {
+                                    if (permission.granted) {
+                                        // 获取权限
+                                    } else {
+                                        //  未获取权限
+                                    }
+
+                                } else if (permission.name.equals(Manifest.permission.RECORD_AUDIO)) {
+
+                                    if (permission.granted) {
+                                        // 获取权限
+                                    } else {
+                                        //  未获取权限
+                                    }
+
+                                }
+                            }
+                        });
+            }
+        });
 
     }
 

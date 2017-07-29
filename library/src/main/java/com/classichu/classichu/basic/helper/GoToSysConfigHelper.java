@@ -13,6 +13,7 @@ import android.util.Log;
 
 import com.classichu.classichu.basic.tool.AppTool;
 import com.classichu.classichu.basic.tool.BaseTool;
+import com.classichu.classichu.basic.tool.DeviceTool;
 import com.classichu.classichu.basic.tool.ToastTool;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public class GoToSysConfigHelper {
 
     public static  void  goToNormalEnterWithManufacturer(){
         try {
-        String manufacturer= AppTool.getDeviceManufacturer();
+        String manufacturer= DeviceTool.getDeviceManufacturer();
 
         switch (manufacturer.toLowerCase()){
             case "huawei":
